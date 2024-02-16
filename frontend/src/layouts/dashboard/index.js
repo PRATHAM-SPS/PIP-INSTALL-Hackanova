@@ -42,7 +42,7 @@ import { lineChartDataDashboard } from "layouts/dashboard/data/lineChartData";
 import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptions";
 import { barChartDataDashboard } from "layouts/dashboard/data/barChartData";
 import { barChartOptionsDashboard } from "layouts/dashboard/data/barChartOptions";
-import { getDoc, doc } from "firebase/firestore";
+import { getDoc, doc, getDocs, collection } from "firebase/firestore";
 import { fs } from "layouts/authentication/firebase";
 import { useEffect, useState } from "react";
 
@@ -78,6 +78,7 @@ function Dashboard() {
   let monthName = monthNames[monthIndex];
   var today = new Date();
   var date = today.getDate() + monthName + today.getFullYear();
+  const [info, setInfo] = useState(null);
 
   const rewards = doc(fs, "kshitij", "details");
   const balanceref = doc(fs, "kshitij", monthName + " Expense");
@@ -89,6 +90,10 @@ function Dashboard() {
     });
   };
 
+        // querySnapshot.forEach((doc) => {
+        //     console.log(doc.id, " => ", doc.data());
+        // });
+
   useEffect(() => {
     getDoc(rewards)
       .then((data) => {
@@ -97,6 +102,10 @@ function Dashboard() {
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
+
+    getDocs(collection(fs, "kshitij", monthName + " Expense", "transactions")).then((data) => {
+      setInfo(data);
+    })
 
     getDoc(balanceref)
       .then((data) => {
@@ -109,7 +118,9 @@ function Dashboard() {
   }, []);
   const [projects, setProjects] = useState([]);
 
-  useEffect(() => {
+  useEffect(async () => {
+  //  const querySnapshot = await getDocs(collection(fs, "kshitij", monthName + " Expense", "transactions"));
+  //  setInfo(querySnapshot);
     const query = ref(db, "1");
     return onValue(query, (snapshot) => {
       const data = snapshot.val();
@@ -118,6 +129,7 @@ function Dashboard() {
         setProjects(data);
       }
     });
+
   }, []);
 
   const print123 = () => {
@@ -186,7 +198,7 @@ function Dashboard() {
           </Grid>
         </VuiBox>
         <VuiBox mb={3}>
-          <InvoiceModal showModal={isOpen} closeModal={closeModal} info={states}/>
+          <InvoiceModal showModal={isOpen} closeModal={closeModal} info={info} expense={expense} income={income} />
           <Grid container spacing="18px">
             <Grid item xs={12} lg={12} xl={5}>
               <WelcomeMark />
