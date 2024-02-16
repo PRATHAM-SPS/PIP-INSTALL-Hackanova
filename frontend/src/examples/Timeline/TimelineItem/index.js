@@ -1,7 +1,7 @@
 /*!
 
 =========================================================
-* TERRA FINANCE React - v1.0.0
+* BudgetBuddy React - v1.0.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/vision-ui-free-react
@@ -39,14 +39,14 @@ function TimelineItem({ color, icon, title, dateTime, description, badges, lastI
   const renderBadges =
     badges.length > 0
       ? badges.map((badge, key) => {
-          const badgeKey = `badge-${key}`;
+        const badgeKey = `badge-${key}`;
 
-          return (
-            <VuiBox key={badgeKey} mr={key === badges.length - 1 ? 0 : 0.5}>
-              <VuiBadge color={color} size="xs" badgeContent={badge} container />
-            </VuiBox>
-          );
-        })
+        return (
+          <VuiBox key={badgeKey} mr={key === badges.length - 1 ? 0 : 0.5}>
+            <VuiBadge color={color} size="xs" badgeContent={badge} container />
+          </VuiBox>
+        );
+      })
       : null;
 
   return (

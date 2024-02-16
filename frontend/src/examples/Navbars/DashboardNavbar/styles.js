@@ -1,7 +1,7 @@
 /*!
 
 =========================================================
-* TERRA FINANCE React - v1.0.0
+* BudgetBuddy React - v1.0.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/vision-ui-free-react
@@ -33,10 +33,10 @@ function navbar(theme, ownerState) {
       transparentNavbar || absolute
         ? `none`
         : `${linearGradient(
-            gradients.navbar.main,
-            gradients.navbar.state,
-            gradients.navbar.deg
-          )} !importants`,
+          gradients.navbar.main,
+          gradients.navbar.state,
+          gradients.navbar.deg
+        )} !importants`,
 
     color: () => {
       let color;

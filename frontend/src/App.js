@@ -98,7 +98,7 @@ export default function App() {
             <Sidenav
               color={sidenavColor}
               brand=""
-              brandName="TERRA FINANCE"
+              brandName="BudgetBuddy"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
@@ -122,7 +122,7 @@ export default function App() {
           <Sidenav
             color={sidenavColor}
             brand=""
-            brandName="TERRA FINANCE"
+            brandName="BudgetBuddy"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
