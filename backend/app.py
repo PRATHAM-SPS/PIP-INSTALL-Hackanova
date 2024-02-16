@@ -29,9 +29,9 @@ def send_mail(receiver_email='chinmaysonawane57@gmail.com',name = "Kshitij",cate
     category = request.json["category"]
 # Email account credentials
     body = "\nDear "+name+",\n\nYour expenditure in "+category+" has exceeded the budget limit set for this category. We urge you to take immediate action to address this situation and bring your spending in line with the budget limit. Failure to do so may have a negative impact on your overall financial position and hinder your ability to achieve your financial goals.\n\nAs a budget monitoring company, we understand the importance of financial prudence and effective resource management. We offer budget monitoring and management solutions that can assist you in managing your finances effectively. Please contact us if you require any assistance.\n\nBest regards,\n\nTaher Barwaniwala\n\nTerraFinances"
-    sender_email = ''
-    sender_password = ''
-    receiver_email = receiver_email
+    sender_email = 'barwaniwalataher6@outlook.com'
+    sender_password = '_Taher@2002'
+    receiver_email = 'tripathirishi80@gmail.com'
 
     # Create message object instance
     message = MIMEMultipart()
@@ -121,11 +121,11 @@ def get_product_info():
     # Check if the answer is "No"
     if "No" in generated_text:
         # Generate alternative
-        pf=f'''Suggest renewable or sustainable alternatives to {product_name} in the year 2050'''
+        pf=f'''Suggest renewable or sustainable alternatives to {product_name} '''
         alternative = model.generate_content(pf)
         # Get alternative text
         alt_text = alternative.text
-        print(alt_text)
+        # print(alt_text)
 
         # Return response as JSON
         return { "key" : '0'}
@@ -144,13 +144,13 @@ def send_point_mail(receiver_email='barwaniwalataher6@gmail.com',name = "Kshitij
     body = expense_vinci(type=type,product = product)
     sender_email = 'barwaniwalataher6@outlook.com'
     sender_password = '_Taher@2002'
-    receiver_email = receiver_email
+    receiver_email = 'tripathirishi80@gmail.com'
 
     # Create message object instance
     message = MIMEMultipart()
     message['From'] = sender_email
     message['To'] = receiver_email
-    message['Subject'] = 'You Got Some sustainable reward'
+    message['Subject'] = 'Terra Wallet Update!'
 
     # Email body
     body = body
