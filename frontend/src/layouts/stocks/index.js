@@ -120,9 +120,12 @@ const ChatPage = () => {
     <DashboardLayout>
       <DashboardNavbar />
       <VuiBox py={3} className={classes.chatContainer}>
+      <VuiBox py={3} className={classes.chatContainer}>
         <Card>
           <VuiBox display="flex" justifyContent="space-between" alignItems="center" padding={2}>
+          <VuiBox display="flex" justifyContent="space-between" alignItems="center" padding={2}>
             <VuiTypography variant="lg" color="white">
+              Chat with the Stylish ChatBot
               Chat with the Stylish ChatBot
             </VuiTypography>
           </VuiBox>
@@ -156,5 +159,7 @@ const ChatPage = () => {
     </DashboardLayout>
   );
 };
+};
 
+export default ChatPage;
 export default ChatPage;

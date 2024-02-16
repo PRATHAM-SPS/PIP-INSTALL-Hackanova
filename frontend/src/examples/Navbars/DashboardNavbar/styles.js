@@ -33,10 +33,10 @@ function navbar(theme, ownerState) {
       transparentNavbar || absolute
         ? `none`
         : `${linearGradient(
-            gradients.navbar.main,
-            gradients.navbar.state,
-            gradients.navbar.deg
-          )} !importants`,
+          gradients.navbar.main,
+          gradients.navbar.state,
+          gradients.navbar.deg
+        )} !importants`,
 
     color: () => {
       let color;

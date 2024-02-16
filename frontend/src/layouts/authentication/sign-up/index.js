@@ -66,24 +66,24 @@ function SignIn() {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-   
+
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log("hoi")
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-          history.push("/dashboard")
-          // ...
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        history.push("/dashboard")
+        // ...
       })
       .catch((error) => {
         console.log("not")
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
-          // ..
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // ..
       });
-    }
+  }
 
   return (
     <CoverLayout
@@ -252,9 +252,9 @@ function SignIn() {
               )}
             >
               <VuiInput
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}  
-              required 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
                 type="email"
                 placeholder="Your email..."
                 sx={({ typography: { size } }) => ({
@@ -280,9 +280,9 @@ function SignIn() {
               )}
             >
               <VuiInput
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} 
-              required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
                 type="password"
                 placeholder="Your password..."
                 sx={({ typography: { size } }) => ({
@@ -304,8 +304,8 @@ function SignIn() {
             </VuiTypography>
           </VuiBox>
           <VuiBox mt={4} mb={1}>
-            <VuiButton color="info" fullWidth type="submit" 
-                            onClick={onSubmit} >
+            <VuiButton color="info" fullWidth type="submit"
+              onClick={onSubmit} >
               SIGN UP
             </VuiButton>
           </VuiBox>

@@ -105,6 +105,49 @@ function Expense() {
     e.preventDefault()
     console.log("started")
     console.log(category)
+    const currentDate = new Date();
+
+// Get the components of the date
+const year = currentDate.getFullYear();
+const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+const day = String(currentDate.getDate()).padStart(2, '0');
+
+// Get the components of the time
+const hours = String(currentDate.getHours()).padStart(2, '0');
+const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+
+// Create the simple date and time format
+const simpleDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+    try{
+        const docRef = await updateDoc(doc(fs, "kshitij",monthName + " Expense"), {
+            balance : (previoustotal - amount),
+            expense: (parseInt(expense) + parseInt(amount)),
+            [category]: (previouscategory - amount)
+        });
+          console.log("success")
+        
+          const transactionCollectionRef = setDoc(doc(fs, "kshitij", monthName + " Expense", "transactions/t" + simpleDateTime  ), {
+                amount :  amount,
+                datetime: simpleDateTime,
+                option: category,
+                product: product
+
+
+            });
+              console.log("transaction saved")
+       
+//  const querySnapshot = await getDocs(collection(fs, "kshitij", monthName + " Expense", "transactions"));
+//         querySnapshot.forEach((doc) => {
+//             console.log(doc.id, " => ", doc.data());
+//         });
+
+         
+
+    } catch(e) {
+        console.log(e)
+    }
     try {
       const docRef = await updateDoc(doc(fs, "kshitij", monthName + " Expense"), {
         balance: (previoustotal - amount),

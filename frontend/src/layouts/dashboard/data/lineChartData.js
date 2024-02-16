@@ -23,6 +23,6 @@ export const lineChartDataDashboard = [
   },
   {
     name: "Home Improvements",
-    data: [657.30,  551.50, 447.52, 654.95, 660.13, 650.81],
+    data: [657.30, 551.50, 447.52, 654.95, 660.13, 650.81],
   },
 ];

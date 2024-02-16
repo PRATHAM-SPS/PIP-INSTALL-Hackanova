@@ -30,14 +30,24 @@ function Split() {
     const [amt, setAmt] = useState(0);
     const [email, setEmail] = useState("");
 
+    const onSubmit = async (e) => {
+        e.preventDefault();
 
-    // const onSubmit = async (e) => {
-    //     setSplit(e.target.valueAsNumber / 2)
+        const data = {
+            email: email,
+            amt: amt
+        };
 
-    //     setMessage("You lost 1 Terra Reward, try to use renewable resource next time")
-    //     // axios.post("http://localhost:4000/send_point_mail", { "email": email, "amt": amt }).then(e => console.log(e))
+        try {
+            console.log(data);
+            const response = await axios.post('http://localhost:4000/splitbillemail', data);
+            console.log(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
-    // }
+
 
     return (
         (<CoverLayout
@@ -48,7 +58,7 @@ function Split() {
             motto="A treat for your friends and a treat for your pocket"
             image={bgSignIn}
         >
-            <VuiBox component="form" role="form">
+            <VuiBox component="form" role="form" onSubmit={onSubmit}>
 
                 <VuiBox mb={2}>
                     <VuiBox mb={1} ml={0.5}>
@@ -107,19 +117,19 @@ function Split() {
 
 
                 <VuiBox mt={4} mb={1}>
-                    <VuiButton color="info" fullWidth>
+                    <VuiButton color="info" fullWidth type='submit'>
                         SPLIT THE BILL
                     </VuiButton>
                 </VuiBox>
                 {(amt > 0) ?
                     (<VuiBox mb={1} ml={0.5}>
                         <VuiTypography component="label" variant="button" color="success" fontWeight="medium">
-                            "You have split {split} monthly to spend on miscellaneous things"
+                            "You have split  monthly to spend on miscellaneous things"
                         </VuiTypography>
                     </VuiBox>) :
                     (<VuiBox mb={1} ml={0.5}>
                         <VuiTypography component="label" variant="button" color="error" fontWeight="medium">
-                            "jitni chadar ho utna hin pair failana chahiye"
+
                         </VuiTypography>
                     </VuiBox>)}
             </VuiBox>
