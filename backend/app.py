@@ -135,44 +135,64 @@ def get_product_info():
 
 
 @app.route("/splitbillemail", methods = ['POST'])
-def splitbillemail(receiver_email='barwaniwalataher6@gmail.com'):
+def splitbillemail():
+    print(request.json['email'])
     email = request.json['email']
     amt = request.json["amt"]
     l = email.count(',')
-    finalamt = amt/(l+1)
+    finalamt = int(amt/(l+1))
 
     geminikey="AIzaSyDeIMfblCzN3zfBl9CBt8n12HvjQYhRANQ"
     genai.configure(api_key = geminikey)
 # Email account credentials
-    pf=f'''Create an email body to split the bill of amount: {amt} into {l+1} people and allot each person {finalamt}'''
-    model = genai.GenerativeModel('gemini-pro')
-    
-    alternative = model.generate_content(pf)
-    body = alternative.text
-    print(body)
+    body = """
+    Dear friend, <br>
+    <br>
+    We have some incomplete transactions. You have to pay {} for the bill.<br>
+    You can easily send it on my UPI: taherbarwani@okbuddy
+
+    <br>
+    <br>
+
+    <a href="https://freeimage.host/"><img src="https://iili.io/JE1qDdP.jpg" alt="JE1qDdP.jpg" border="0" /></a> <br>
+    <br>
+
+    Regards,<br>
+    Taher Barwaniwala,<br>
+    Your Friend
+    """.format(finalamt)
     sender_email = 'barwaniwalataher6@outlook.com'
     sender_password = '_Taher@2002'
-    receiver_email = 'tripathirishi80@gmail.com'
 
-    # Create message object instance
-    message = MIMEMultipart()
-    message['From'] = sender_email
-    message['To'] = receiver_email
-    message['Subject'] = 'Terra Wallet Update!'
+    if l > 0:
+        emails = email.split(',')
+    else:
+        emails = [email]
+    for i in range(l+1):
+        receiver_email = emails[i]
 
-    # Email body
-    body = body
-    message.attach(MIMEText(body, 'plain'))
+        # Create message object instance
+        message = MIMEMultipart()
+        message['From'] = sender_email
+        message['To'] = receiver_email
+        message['Subject'] = 'Bill Split Check!'
 
-    # Create SMTP session
-    session = smtplib.SMTP('smtp.office365.com', 587)
-    session.starttls()
-    session.login(sender_email, sender_password)
+        # Email body
+        body = body
+        message.attach(MIMEText(body, 'html'))
 
-    # Send email
-    text = message.as_string()
-    session.sendmail(sender_email, receiver_email, text)
-    session.quit()
+        # Create SMTP session
+        session = smtplib.SMTP('smtp.office365.com', 587)
+        session.starttls()
+        session.login(sender_email, sender_password)
+
+        # Send email
+        text = message.as_string()
+        session.sendmail(sender_email, receiver_email, text)   
+        session.quit()
+    
+    
+   
     print('Mail Sent')
 
     return json.dumps({"success":"200"})
