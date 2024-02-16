@@ -7,19 +7,20 @@ import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import { BiPaperPlane, BiCloudDownload } from "react-icons/bi";
 import html2canvas from "html2canvas";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import jsPDF from "jspdf";
 import { getDoc, doc, getDocs, collection } from "firebase/firestore";
 import { fs } from "layouts/authentication/firebase";
 import domtoimage from "dom-to-image";
 
-import { Chart, PieController, CategoryScale, ArcElement } from 'chart.js';
+import { Chart, PieController, CategoryScale, ArcElement } from "chart.js";
 
 Chart.register(PieController, CategoryScale, ArcElement);
 
 const PieChart = (value) => {
+  const [data, setData] = useState(null);
+const chartRef = useRef(null);
   useEffect(async () => {
-
     let datainfo = {};
     await getDocs(collection(fs, "kshitij", "February Expense", "transactions"))
       .then((querySnapshot) => {
@@ -40,7 +41,7 @@ const PieChart = (value) => {
 
           acc[key] += amount;
 
-          console.log(acc)
+          console.log(acc);
           return acc;
         }, {});
 
@@ -54,40 +55,95 @@ const PieChart = (value) => {
     // Your income and expenses data
     var totalIncome = value.income; // Replace this with your actual total income
     var expensesData = {
-        rent: datainfo.education,
-        groceries: 10
+      education: datainfo.education,
+      grocery: datainfo.grocery,
+      bills: datainfo.bills,
+      investment: datainfo.investment,
+      medical: datainfo.medical,
+      misc: datainfo.misc,
     };
 
     // Calculate percentages for each expense category
     var percentages = {};
     Object.keys(expensesData).forEach(function (category) {
-        percentages[category] = (expensesData[category] / totalIncome) * 100;
+      percentages[category] = (expensesData[category] / totalIncome) * 100;
     });
 
     // Prepare data for the pie chart
     var pieChartData = {
-        labels: Object.keys(expensesData),
-        datasets: [{
-            data: Object.values(percentages),
-            backgroundColor: ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99'], // Adjust these colors
-        }]
+      labels: Object.keys(expensesData),
+      datasets: [
+        {
+          data: Object.values(percentages),
+          backgroundColor: [
+            "#ff9999",
+            "#66b3ff",
+            "#99ff99",
+            "#ffcc99",
+            "#ab8888",
+            "#ff0000",
+          ], // Adjust these colors
+        },
+      ],
     };
+    setData(pieChartData);
 
+    if (chartRef.current) {
+      chartRef.current.destroy();
+    }
     // Get the context of the canvas element we want to select
-    var ctx = document.getElementById('myPieChart').getContext('2d');
+    var ctx = document.getElementById("myPieChart").getContext("2d");
 
     // Create the pie chart
-    var myPieChart = new Chart(ctx, {
-        type: 'pie',
-        data: pieChartData,
+    chartRef.current = new Chart(ctx, {
+      type: "pie",
+      data: pieChartData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            option: "true",
+            position: "right",
+          },
+          title: {
+            display: true,
+            text: "Chart.js Pie Chart",
+          },
+        },
+      },
     });
+
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
+    };
   }, []);
+  
 
   return (
-    <canvas id="myPieChart" width="400" height="400"></canvas>
+    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+  <canvas id="myPieChart" width="400" height="400"></canvas>
+  {data && (
+    <div>
+      {data.labels.map((label, index) => (
+        <div key={index} style={{ display: "flex", alignItems: "center", marginLeft: '30px' }}>
+          <div
+            style={{
+              width: "20px",
+              height: "20px",
+              backgroundColor: data.datasets[0].backgroundColor[index],
+              marginRight: "10px",
+            }}
+          ></div>
+          <div>{label}</div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
   );
 };
-
 
 class InvoiceModal extends React.Component {
   constructor(props) {
@@ -125,7 +181,7 @@ class InvoiceModal extends React.Component {
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
-  }
+  };
 
   GenerateInvoice = () => {
     this.capture().then((himg) => {
@@ -172,6 +228,12 @@ class InvoiceModal extends React.Component {
         }
       );
     });
+  };
+
+  close1 = () => {
+    if (chartRef.current) {
+      chartRef.current.destroy();
+    }
   }
 
   render() {
@@ -184,7 +246,6 @@ class InvoiceModal extends React.Component {
           centered
         >
           <div id="invoiceCapture">
-            <PieChart income={this.props.income} info={this.props.expense} />
             <div className="d-flex flex-row justify-content-between align-items-start bg-light w-100 p-4">
               <div className="w-100">
                 <h4 className="fw-bold my-2">BudgetBuddy</h4>
@@ -195,55 +256,77 @@ class InvoiceModal extends React.Component {
               <div className="text-end ms-4">
                 <h6 className="fw-bold mt-1 mb-2">Date&nbsp;:</h6>
                 <h5 className="fw-bold text-secondary">
-                {(new Date()).toLocaleDateString()}
+                  {new Date().toLocaleDateString()}
                 </h5>
                 <h5 className="fw-bold text-secondary">
-                  {(new Date()).toLocaleTimeString()}
+                  {new Date().toLocaleTimeString()}
                 </h5>
               </div>
             </div>
             <div className="p-4">
-              <h4 className="fw-bold my-2">Income: {this.props.income}</h4>
-              <h4 className="fw-bold my-2">Expenses: {this.props.expense}</h4>
-              <h4 className="fw-bold my-2">Balance: {this.props.income - this.props.expense}</h4>
+              <h4 className="fw-bold my-2">Income:   {this.props.income}</h4>
+              <h4 className="fw-bold my-2">Expenses:    {this.props.expense}</h4>
+              <h4 className="fw-bold my-2">
+                Balance: {this.props.income - this.props.expense}
+              </h4>
+              <div
+                style={{ width: "300px", height: "300px", marginTop: "80px" }}
+              >
+                <div>
+                  {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <div style={{ flex: 1 }}> */}
+                  <PieChart
+                    income={this.props.income}
+                    info={this.props.expense}
+                  />
+                  {/* </div>
+                  <div style={{ flex: 0.5 }}> */}
+                  {/* <Row className="p-5">
+              <Col md={6}>
+                saasd
+                ZXZ
+              </Col>
+            </Row> */}
+                  {/* </div>
+                </div>               */}
+                </div>
+              </div>
             </div>
             <div className="p-4">
-            {this.state.datainfo && (
-              <Table className="mb-0">
-                <thead>
-                  <tr>
-                    <th>DATE & TIME</th>
-                    <th>CATEGORY</th>
-                    <th>PRODUCT</th>
-                    <th className="text-end">AMOUNT</th>
-                  </tr>
-                </thead>
-                
+              {this.state.datainfo && (
+                <Table className="mb-0">
+                  <thead>
+                    <tr>
+                      <th>DATE & TIME</th>
+                      <th>CATEGORY</th>
+                      <th>PRODUCT</th>
+                      <th className="text-end">AMOUNT</th>
+                    </tr>
+                  </thead>
+
                   <tbody>
                     {this.state.datainfo.map((item, i) => {
                       return (
                         <tr id={i} key={i}>
-                          <td>
-                            {item.data().datetime}
-                          </td>
+                          <td>{item.data().datetime}</td>
                           <td>{item.data().option}</td>
-                          <td>
-                            {item.data().product}
-                          </td>
-                          <td className="text-end">
-                            {item.data().amount}
-                          </td>
+                          <td>{item.data().product}</td>
+                          <td className="text-end">{item.data().amount}</td>
                         </tr>
                       );
                     })}
                   </tbody>
-              </Table>
+                </Table>
               )}
             </div>
             <div className="p-4 text-end">
-                Signed By 
-                <img src="https://iili.io/JEEICOB.png" alt="JEEICOB.png" border="0" style={{ height: '125px', width: '125px'}} />
-          
+              Signed By
+              <img
+                src="https://iili.io/JEEICOB.png"
+                alt="JEEICOB.png"
+                border="0"
+                style={{ height: "125px", width: "125px" }}
+              />
             </div>
           </div>
           <div className="pb-4 px-4">

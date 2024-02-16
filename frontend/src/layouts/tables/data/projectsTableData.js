@@ -7,7 +7,9 @@ import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiProgress from "components/VuiProgress";
 import { fs } from "layouts/authentication/firebase";
-import { doc, setDoc, getDoc,getDocs, updateDoc } from "firebase/firestore";
+
+import { doc, setDoc, getDoc, getDocs, updateDoc } from "firebase/firestore";
+
 import { collection, query, where } from "firebase/firestore";
 
 // Images
@@ -71,4 +73,6 @@ export default {
     { name: "Amount", align: "center" },
   ],
   rows: rows,
+
 };
+

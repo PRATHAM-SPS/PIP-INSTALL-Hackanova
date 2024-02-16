@@ -137,7 +137,7 @@ function Dashboard() {
   };
 
   const [isOpen, setIsOpen] = useState(false);
-  const closeModal = (event) => this.setState({ isOpen: false });
+  const closeModal = (event) => setIsOpen(false);
   const [states, setStates] = useState([]);
 
   return (

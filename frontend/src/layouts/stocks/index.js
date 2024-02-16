@@ -1,3 +1,4 @@
+
 // @mui material components
 import Card from "@mui/material/Card";
 
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    maxWidth: 400,
+    width: 1000,
     margin: "0 auto",
   },
   chatMessages: {
@@ -56,61 +57,72 @@ const useStyles = makeStyles((theme) => ({
       background: `linear-gradient(45deg, ${theme.palette.primary.dark} 30%, ${theme.palette.primary.main} 90%)`,
     },
   },
+  voiceButton: {
+    cursor: "pointer",
+    background: `linear-gradient(45deg, ${theme.palette.secondary.main} 30%, ${theme.palette.secondary.dark} 90%)`,
+    color: theme.palette.common.white,
+    padding: theme.spacing(1),
+    borderRadius: theme.shape.borderRadius,
+    border: 0,
+    marginLeft: theme.spacing(2),
+    "&:hover": {
+      background: `linear-gradient(45deg, ${theme.palette.secondary.dark} 30%, ${theme.palette.secondary.main} 90%)`,
+    },
+  },
 }));
 
 const ChatPage = () => {
   const classes = useStyles();
   const [chatMessages, setChatMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
+  const recognition = new window.webkitSpeechRecognition();
+  const [listening, setListening] = useState(false);
 
-  const handleSendMessage = () => {
+  useEffect(() => {
+    recognition.onresult = (event) => {
+      const result = event.results[0][0].transcript;
+      setInputMessage(result);
+      recognition.stop();
+      setListening(false);
+    };
+
+    recognition.onend = () => {
+      setListening(false);
+    };
+  }, []);
+
+  const handleSendMessage = async () => {
     if (inputMessage.trim() !== '') {
       setChatMessages((prevMessages) => [
         ...prevMessages,
         { type: 'user', text: inputMessage },
-        { type: 'bot', text: getBotResponse(inputMessage) },
       ]);
+
+      try {
+        const response = await axios.post('http://localhost:4000/get_bot_response', {
+          userMessage: inputMessage,
+        });
+
+        const botResponse = response.data.botResponse;
+        setChatMessages((prevMessages) => [
+          ...prevMessages,
+          { type: 'bot', text: botResponse },
+        ]);
+      } catch (error) {
+        console.error('Error fetching bot response:', error);
+      }
+
       setInputMessage('');
     }
   };
 
-  const handleVoiceInput = () => {
-    const recognition = new window.webkitSpeechRecognition() || new window.SpeechRecognition();
-
-    recognition.lang = 'en-US';
-    recognition.start();
-
-    recognition.onresult = (event) => {
-      const userVoiceInput = event.results[0][0].transcript;
-
-      setChatMessages((prevMessages) => [
-        ...prevMessages,
-        { type: 'user', text: userVoiceInput },
-        { type: 'bot', text: getBotResponse(userVoiceInput) },
-      ]);
-
-      // Speak the bot's response
-      speak(getBotResponse(userVoiceInput));
-    };
-
-    recognition.onend = () => {
+  const handleVoiceButtonClick = () => {
+    if (!listening) {
+      recognition.start();
+      setListening(true);
+    } else {
       recognition.stop();
-    };
-  };
-
-  const getBotResponse = (userInput) => {
-    // Implement your chatbot logic here
-    // For simplicity, use a predefined response
-    const defaultResponse = "I'm a stylish chatbot. Ask me anything!";
-
-    // Check for specific user inputs and provide corresponding responses
-    switch (userInput.toLowerCase()) {
-      case 'hello':
-        return 'Hello! How can I assist you today?';
-      case 'bye':
-        return 'Goodbye! Have a great day.';
-      default:
-        return defaultResponse;
+      setListening(false);
     }
   };
 
@@ -132,7 +144,6 @@ const ChatPage = () => {
             </VuiTypography>
           </VuiBox>
           <VuiBox className={classes.chatMessages}>
-            {/* Render chat messages */}
             {chatMessages.map((message, index) => (
               <div key={index} style={{ marginBottom: 10, color: message.type === 'user' ? '#2196F3' : '#4CAF50' }}>
                 {message.type === 'user' ? 'You: ' : 'Bot: '}
@@ -140,7 +151,6 @@ const ChatPage = () => {
               </div>
             ))}
           </VuiBox>
-          {/* Input area */}
           <VuiBox className={classes.inputContainer} padding={2}>
             <input
               type="text"
@@ -152,8 +162,8 @@ const ChatPage = () => {
             <button className={classes.sendButton} onClick={handleSendMessage}>
               Send
             </button>
-            <button className={classes.sendButton} onClick={handleVoiceInput}>
-              Voice
+            <button className={classes.voiceButton} onClick={handleVoiceButtonClick}>
+              {listening ? 'Stop Listening' : 'Start Listening'}
             </button>
           </VuiBox>
         </Card>
@@ -161,5 +171,6 @@ const ChatPage = () => {
     </DashboardLayout>
   );
 };
+
 
 export default ChatPage;
