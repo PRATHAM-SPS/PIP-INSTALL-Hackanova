@@ -50,6 +50,7 @@ import { useEffect, useState } from "react";
 import { db } from "layouts/authentication/firebase";
 import { onValue, ref } from "firebase/database";
 
+import InvoiceModal from './components/Agreement/Agreement'
 
 function Dashboard() {
   const { gradients } = colors;
@@ -102,6 +103,14 @@ function Dashboard() {
     });
   }, []);
 
+  const print123 = () => {
+    setIsOpen(true);
+  }
+
+  const [isOpen, setIsOpen] = useState(false); 
+  const closeModal = (event) => this.setState({isOpen: false});
+  const [states, setStates] = useState([])
+
 
   return (
     <DashboardLayout>
@@ -116,7 +125,7 @@ function Dashboard() {
 }
 
 </div>
-
+<InvoiceModal showModal={isOpen} closeModal={closeModal} info={states}/>
       <VuiBox py={3}>
         <VuiBox mb={3}>
           <Grid container spacing={3}>
@@ -140,6 +149,11 @@ function Dashboard() {
                 count={{ color: "error", text: expense }}
                 icon={{ color: "info", component: <IoDocumentText size="22px" color="white" /> }}
               />
+            </Grid>
+            <Grid item xs={12} md={6} xl={3}>
+              <VuiButton variant="contained" color="info" onClick={print123}>
+                GET MONTHLY REPORT
+              </VuiButton>
             </Grid>
             {/* <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
