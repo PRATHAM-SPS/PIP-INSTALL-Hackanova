@@ -129,7 +129,7 @@ function Split() {
                     </VuiBox>) :
                     (<VuiBox mb={1} ml={0.5}>
                         <VuiTypography component="label" variant="button" color="error" fontWeight="medium">
-                            "jitni chadar ho utna hin pair failana chahiye"
+
                         </VuiTypography>
                     </VuiBox>)}
             </VuiBox>

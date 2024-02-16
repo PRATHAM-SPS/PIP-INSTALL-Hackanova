@@ -15,7 +15,7 @@ import google.generativeai as genai
 app = Flask(__name__)
 CORS(app)
 
-total = 3500
+chat_sum = " "
 
 categories = ['Shopping', 'Home Improvement', 'Foods', 'Credit Card Payment', 'Entertainment', 'Misc', 'Groceries', 'Paycheck']
 models = {}
@@ -37,7 +37,7 @@ def send_mail(name = "Rishabh"):
     message = MIMEMultipart()
     message['From'] = sender_email
     message['To'] = receiver_email
-    message['Subject'] = 'Alert You have spend over your spending limit'
+    message['Subject'] = 'Alert! You have spend over your spending limit'
 
     # Email body
     body = body
@@ -94,7 +94,7 @@ def forecast_spending():
     print(prediction2)
     return ({{"name":"Credit Card Payment", "data":prediction1.tolist()}, {"name": "Home Improvement", "data":prediction2.tolist()}})
 
-geminikey="AIzaSyDeIMfblCzN3zfBl9CBt8n12HvjQYhRANQ"
+geminikey="AIzaSyD17qzyJMl5wjkj79jvpiUSfjA_dv9-dPw"
 genai.configure(api_key = geminikey)
 
 @app.route('/product', methods=['POST'])
@@ -133,6 +133,48 @@ def get_product_info():
     # Return response as JSON
     return {"key" : '1'}
 
+@app.route('/voice_input', methods=['POST'])
+def process_voice_input():
+    try:
+        voice_file = request.files['voice']
+        recognizer = sr.Recognizer()
+
+        with sr.AudioFile(voice_file) as source:
+            audio_data = recognizer.record(source)
+
+        user_input = recognizer.recognize_google(audio_data)
+        # Now, you can use the user_input as needed in your application logic
+
+        return jsonify({"user_input": user_input})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+geminikey = "AIzaSyDeIMfblCzN3zfBl9CBt8n12HvjQYhRANQ"
+genai.configure(api_key=geminikey)
+chat_sum = " "
+
+@app.route('/get_bot_response', methods=['POST'])
+def get_bot_response():
+    user_message = request.json.get('userMessage', '')
+    global chat_sum 
+    print(chat_sum)
+    
+    # Perform any backend logic based on the user's message here
+    # For example, you can call your Gem AI API or any other processing
+    
+    # Use Gem AI to generate a response
+    pf = f'''You are a finance chatbot and your task is to give appropriate outputs to the user's inputs. Make your answers short and to the point
+            Chat Summary: {chat_sum}
+            User{user_message}'''
+    model = genai.GenerativeModel('gemini-pro')
+    response = model.generate_content(pf)
+    generated_text = response.text
+
+    chat_sum +=  " User message:"+ user_message + " Bot Answer: " + response.text
+    
+    # Return the generated response from Gem AI
+    return jsonify({'botResponse': generated_text})
+
 
 @app.route("/splitbillemail", methods = ['POST'])
 def splitbillemail():
@@ -142,7 +184,7 @@ def splitbillemail():
     l = email.count(',')
     finalamt = int(amt/(l+1))
 
-    geminikey="AIzaSyDeIMfblCzN3zfBl9CBt8n12HvjQYhRANQ"
+    geminikey="AIzaSyD17qzyJMl5wjkj79jvpiUSfjA_dv9-dPw"
     genai.configure(api_key = geminikey)
 # Email account credentials
     body = """
@@ -190,8 +232,6 @@ def splitbillemail():
         text = message.as_string()
         session.sendmail(sender_email, receiver_email, text)   
         session.quit()
-    
-    
    
     print('Mail Sent')
 
