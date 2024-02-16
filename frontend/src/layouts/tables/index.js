@@ -1,11 +1,11 @@
 // @mui material components
 import Card from "@mui/material/Card";
 
-// PIP INSTALL Dashboard React components
+// Bootstrap Paradox Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 
-// PIP INSTALL Dashboard React example components
+// Bootstrap Paradox Dashboard React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Table from "examples/Tables/Table";
@@ -64,9 +64,9 @@ function Tables() {
               },
             }}
           >
-            {/* <Table columns={prCols} rows={prRows} /> */}
+            <Table columns={prCols} rows={prRows} />
             <table>
-        <thead>
+        {/* <thead>
           <tr>
             <th>Account Name</th>
             <th>Amount</th>
@@ -75,7 +75,7 @@ function Tables() {
             <th>Description</th>
             <th>Transaction Type</th>
           </tr>
-        </thead>
+        </thead> */}
         <tbody>
   {projects.map((projectArray, index) => (
     projectArray.map((project, innerIndex) => (
