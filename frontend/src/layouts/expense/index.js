@@ -147,6 +147,7 @@ const simpleDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
     } catch(e) {
         console.log(e)
+    }
     try {
       const docRef = await updateDoc(doc(fs, "kshitij", monthName + " Expense"), {
         balance: (previoustotal - amount),
