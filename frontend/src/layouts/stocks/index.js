@@ -10,16 +10,11 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Table from "examples/Tables/Table";
 
-// Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
-
 import { db } from "layouts/authentication/firebase";
 import { onValue, ref } from "firebase/database";
 
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import annyang from 'annyang'
 
 import { makeStyles } from "@mui/styles";
 
@@ -93,6 +88,9 @@ const ChatPage = () => {
         { type: 'user', text: userVoiceInput },
         { type: 'bot', text: getBotResponse(userVoiceInput) },
       ]);
+
+      // Speak the bot's response
+      speak(getBotResponse(userVoiceInput));
     };
 
     recognition.onend = () => {
@@ -116,16 +114,20 @@ const ChatPage = () => {
     }
   };
 
+  const speak = (text) => {
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    synth.speak(utterance);
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <VuiBox py={3} className={classes.chatContainer}>
-      <VuiBox py={3} className={classes.chatContainer}>
         <Card>
           <VuiBox display="flex" justifyContent="space-between" alignItems="center" padding={2}>
-          <VuiBox display="flex" justifyContent="space-between" alignItems="center" padding={2}>
             <VuiTypography variant="lg" color="white">
-              Chat with the Stylish ChatBot
               Chat with the Stylish ChatBot
             </VuiTypography>
           </VuiBox>
@@ -159,7 +161,5 @@ const ChatPage = () => {
     </DashboardLayout>
   );
 };
-};
 
-export default ChatPage;
 export default ChatPage;
