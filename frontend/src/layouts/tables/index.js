@@ -42,7 +42,7 @@ function Tables() {
       <DashboardNavbar />
       <VuiBox py={3}>
         <VuiBox mb={3}>
-          
+
         </VuiBox>
         <Card>
           <VuiBox display="flex" justifyContent="space-between" alignItems="center">
@@ -64,34 +64,34 @@ function Tables() {
               },
             }}
           >
-            {/* <Table columns={prCols} rows={prRows} /> */}
+            <Table columns={prCols} rows={prRows} />
             <table>
-        <thead>
-          <tr>
-            <th>Account Name</th>
-            <th>Amount</th>
-            <th>Category</th>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Transaction Type</th>
-          </tr>
-        </thead>
-        <tbody>
-  {projects.map((projectArray, index) => (
-    projectArray.map((project, innerIndex) => (
-      <tr key={`${index}-${innerIndex}`}>
-        <td>{project["Account Name"]}</td>
-        <td>{project["Amount"]}</td>
-        <td>{project["Category"]}</td>
-        <td>{project["Date"]}</td>
-        <td>{project["Description"]}</td>
-        <td>{project["Transaction Type"]}</td>
-      </tr>
-    ))
-  ))}
-</tbody>
+              {/* <thead>
+                <tr>
+                  <th>Account Name</th>
+                  <th>Amount</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Transaction Type</th>
+                </tr>
+              </thead> */}
+              <tbody>
+                {projects.map((projectArray, index) => (
+                  projectArray.map((project, innerIndex) => (
+                    <tr key={`${index}-${innerIndex}`}>
+                      <td>{project["Account Name"]}</td>
+                      <td>{project["Amount"]}</td>
+                      <td>{project["Category"]}</td>
+                      <td>{project["Date"]}</td>
+                      <td>{project["Description"]}</td>
+                      <td>{project["Transaction Type"]}</td>
+                    </tr>
+                  ))
+                ))}
+              </tbody>
 
-      </table>
+            </table>
 
 
             {
