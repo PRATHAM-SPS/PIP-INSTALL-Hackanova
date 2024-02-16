@@ -1,7 +1,7 @@
 /*!
 
 =========================================================
-* TERRA FINANCE React - v1.0.0
+* BudgetBuddy React - v1.0.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/vision-ui-free-react
@@ -16,11 +16,11 @@
 
 */
 
-// Bootstrap Paradox Dashboard React base styles
+// PIP INSTALL Dashboard React base styles
 import colors from "assets/theme/base/colors";
 import borders from "assets/theme/base/borders";
 
-// Bootstrap Paradox Dashboard React helper functions
+// PIP INSTALL Dashboard React helper functions
 import rgba from "assets/theme/functions/rgba";
 import pxToRem from "assets/theme/functions/pxToRem";
 

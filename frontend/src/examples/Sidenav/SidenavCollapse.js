@@ -1,7 +1,7 @@
 /*!
 
 =========================================================
-* TERRA FINANCE React - v1.0.0
+* BudgetBuddy React - v1.0.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/vision-ui-free-react
@@ -26,7 +26,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Icon from "@mui/material/Icon";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 
 // Custom styles for the SidenavCollapse
@@ -37,7 +37,7 @@ import {
   collapseText,
 } from "examples/Sidenav/styles/sidenavCollapse";
 
-// Bootstrap Paradox Dashboard React context
+// PIP INSTALL Dashboard React context
 import { useVisionUIController } from "context";
 
 function SidenavCollapse({ color, icon, name, children, active, noCollapse, open, ...rest }) {

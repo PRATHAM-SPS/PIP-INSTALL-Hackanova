@@ -1,7 +1,7 @@
 /*!
 
 =========================================================
-* TERRA FINANCE React - v1.0.0
+* BudgetBuddy React - v1.0.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/vision-ui-free-react
@@ -19,7 +19,7 @@
 // @mui material components
 import { styled } from "@mui/material/styles";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiButton from "components/VuiButton";
 
 export default styled(VuiButton)(({ theme, ownerState }) => {

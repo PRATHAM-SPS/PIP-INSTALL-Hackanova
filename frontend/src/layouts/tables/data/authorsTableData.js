@@ -1,7 +1,7 @@
 /*!
 
 =========================================================
-* TERRA FINANCE React - v1.0.0
+* BudgetBuddy React - v1.0.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/vision-ui-free-react
@@ -17,7 +17,7 @@
 */
 
 /* eslint-disable react/prop-types */
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiAvatar from "components/VuiAvatar";

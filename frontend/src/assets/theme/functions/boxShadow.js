@@ -1,7 +1,7 @@
 /*!
 
 =========================================================
-* TERRA FINANCE React - v1.0.0
+* BudgetBuddy React - v1.0.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/vision-ui-free-react
@@ -20,7 +20,7 @@
   The boxShadow() function helps you to create a box shadow for an element
  */
 
-// Bootstrap Paradox Dashboard React helper functions
+// PIP INSTALL Dashboard React helper functions
 import rgba from "assets/theme/functions/rgba";
 import pxToRem from "assets/theme/functions/pxToRem";
 

@@ -1,7 +1,7 @@
 /*!
 
 =========================================================
-* TERRA FINANCE React - v1.0.0
+* BudgetBuddy React - v1.0.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/vision-ui-free-react
@@ -17,17 +17,17 @@
 */
 
 /**
- * The base typography styles for the Bootstrap Paradox Dashboard  Material.
+ * The base typography styles for the PIP INSTALL Dashboard  Material.
  * You can add new typography style using this file.
- * You can customized the typography styles for the entire Bootstrap Paradox Dashboard  Material using thie file.
+ * You can customized the typography styles for the entire PIP INSTALL Dashboard  Material using thie file.
  */
 
-// Bootstrap Paradox Dashboard React Base Styles
+// PIP INSTALL Dashboard React Base Styles
 
 import colors from "assets/theme/base/colors";
 import "./typography.css";
 
-// Bootstrap Paradox Dashboard React Helper Functions
+// PIP INSTALL Dashboard React Helper Functions
 import pxToRem from "assets/theme/functions/pxToRem";
 
 const { dark } = colors;

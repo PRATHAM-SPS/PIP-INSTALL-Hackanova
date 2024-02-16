@@ -1,7 +1,7 @@
 // @mui material components
 import Tooltip from "@mui/material/Tooltip";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiAvatar from "components/VuiAvatar";
@@ -55,7 +55,7 @@ export default function data() {
           <VuiBox display="flex" alignItems="center">
             <AdobeXD size="20px" />
             <VuiTypography pl="16px" color="white" variant="button" fontWeight="medium">
-              Chakra Bootstrap Paradox Version
+              Chakra PIP INSTALL Version
             </VuiTypography>
           </VuiBox>
         ),

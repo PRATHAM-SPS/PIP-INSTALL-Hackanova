@@ -1,7 +1,7 @@
 /*!
 
 =========================================================
-* TERRA FINANCE React - v1.0.0
+* BudgetBuddy React - v1.0.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/vision-ui-free-react
@@ -19,7 +19,7 @@
 // @mui material components
 import { createTheme } from "@mui/material/styles";
 
-// Bootstrap Paradox Dashboard React base styles
+// PIP INSTALL Dashboard React base styles
 import colors from "assets/theme/base/colors";
 import breakpoints from "assets/theme/base/breakpoints";
 import typography from "assets/theme/base/typography";
@@ -27,7 +27,7 @@ import boxShadows from "assets/theme/base/boxShadows";
 import borders from "assets/theme/base/borders";
 import globals from "assets/theme/base/globals";
 
-// Bootstrap Paradox Dashboard React helper functions
+// PIP INSTALL Dashboard React helper functions
 import boxShadow from "assets/theme/functions/boxShadow";
 import hexToRgb from "assets/theme/functions/hexToRgb";
 import linearGradient from "assets/theme/functions/linearGradient";
@@ -35,7 +35,7 @@ import tripleLinearGradient from "assets/theme/functions/tripleLinearGradient";
 import pxToRem from "assets/theme/functions/pxToRem";
 import rgba from "assets/theme/functions/rgba";
 
-// Bootstrap Paradox Dashboard React components base styles for @mui material components
+// PIP INSTALL Dashboard React components base styles for @mui material components
 import sidenav from "assets/theme/components/sidenav";
 import list from "assets/theme/components/list";
 import listItem from "assets/theme/components/list/listItem";

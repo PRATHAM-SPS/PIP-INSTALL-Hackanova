@@ -8,13 +8,13 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 
-// Bootstrap Paradox Dashboard React example components
+// PIP INSTALL Dashboard React example components
 import Sidenav from "examples/Sidenav";
 
-// Bootstrap Paradox Dashboard React themes
+// PIP INSTALL Dashboard React themes
 import theme from "assets/theme";
 import themeRTL from "assets/theme/theme-rtl";
 
@@ -23,10 +23,10 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
-// Bootstrap Paradox Dashboard React routes
+// PIP INSTALL Dashboard React routes
 import routes from "routes";
 
-// Bootstrap Paradox Dashboard React contexts
+// PIP INSTALL Dashboard React contexts
 import { useVisionUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 export default function App() {
@@ -98,7 +98,7 @@ export default function App() {
             <Sidenav
               color={sidenavColor}
               brand=""
-              brandName="TERRA FINANCE"
+              brandName="BudgetBuddy"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
@@ -122,7 +122,7 @@ export default function App() {
           <Sidenav
             color={sidenavColor}
             brand=""
-            brandName="TERRA FINANCE"
+            brandName="BudgetBuddy"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}

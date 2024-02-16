@@ -1,7 +1,7 @@
 /*!
 
 =========================================================
-* TERRA FINANCE React - v1.0.0
+* BudgetBuddy React - v1.0.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/vision-ui-free-react
@@ -17,9 +17,9 @@
 */
 
 /**
- * The base breakpoints for the Bootstrap Paradox Dashboard  Material.
+ * The base breakpoints for the PIP INSTALL Dashboard  Material.
  * You can add new breakpoints using this file.
- * You can customized the breakpoints for the entire Bootstrap Paradox Dashboard  Material using thie file.
+ * You can customized the breakpoints for the entire PIP INSTALL Dashboard  Material using thie file.
  */
 
 export default {
