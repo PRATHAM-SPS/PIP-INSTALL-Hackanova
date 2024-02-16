@@ -18,12 +18,6 @@ CORS(app)
 
 chat_sum = " "
 
-categories = ['Shopping', 'Home Improvement', 'Foods', 'Credit Card Payment', 'Entertainment', 'Misc', 'Groceries', 'Paycheck']
-models = {}
-for cat in categories:
-    with open("models/"+cat+"_model.pkl", 'rb') as file:
-        models[cat] = pickle.load(file)
-print(models.keys())
 
 @app.route('/send_mail', methods=['POST'])
 def send_mail(name = "Rishabh"):
@@ -77,22 +71,6 @@ def space_file():
     matches = ocr_space_file(file.filename)
 
     return {'matches': matches}
-
-@app.route('/voice_input', methods=['POST'])
-def process_voice_input():
-    try:
-        voice_file = request.files['voice']
-        recognizer = sr.Recognizer()
-
-        with sr.AudioFile(voice_file) as source:
-            audio_data = recognizer.record(source)
-
-        user_input = recognizer.recognize_google(audio_data)
-        # Now, you can use the user_input as needed in your application logic
-
-        return jsonify({"user_input": user_input})
-    except Exception as e:
-        return jsonify({"error": str(e)})
 
 @app.route('/forecast-spending', methods = ['POST'])
 def forecast_spending():
@@ -187,7 +165,7 @@ def get_bot_response():
     response = model.generate_content(pf)
     generated_text = response.text
 
-    chat_sum +=  " User message:"+ user_message + " Bot Answer: " + response.text
+    chat_sum +=  " User message: "+ user_message + " Bot Answer: " + response.text
     
     # Return the generated response from Gem AI
     return jsonify({'botResponse': generated_text})
@@ -254,61 +232,6 @@ def splitbillemail():
 
     return json.dumps({"success":"200"})
 
-# geminikey = "AIzaSyDeIMfblCzN3zfBl9CBt8n12HvjQYhRANQ"
-# genai.configure(api_key=geminikey)
-
-# @app.route('/send_message', methods=['POST'])
-# def send_message():
-#     user_message = request.json.get('message', '')
-    
-#     # Perform any backend logic based on the user's message here
-#     # For example, you can call your Gem AI API or any other processing
-    
-#     # Return a mock bot response for now
-#     return jsonify({'botResponse': f'This is a mock bot response for "{user_message}"'})
-
-geminikey = "AIzaSyDeIMfblCzN3zfBl9CBt8n12HvjQYhRANQ"
-genai.configure(api_key=geminikey)
-
-@app.route('/get_bot_response', methods=['POST'])
-def get_bot_response():
-    user_message = request.json.get('userMessage', '')
-    
-    # Perform any backend logic based on the user's message here
-    # For example, you can call your Gem AI API or any other processing
-    
-    # Use Gem AI to generate a response
-    pf = f"You are a finance chatbot and your task is to give efficient outputs to the user's inputs."
-    model = genai.GenerativeModel('gemini-pro')
-    response = model.generate_content(pf)
-    generated_text = response.text
-    
-    # Return the generated response from Gem AI
-    return jsonify({'botResponse': generated_text})
-
-# # Function to call Gem AI API
-# def call_gem_ai_api(prompt):
-#     try:
-#         response = genai.generate(prompt)
-#         return response.text
-#     except Exception as e:
-#         print(f"Error calling Gem AI API: {e}")
-#         return None
-
-# @app.route('/get_gem_ai_response', methods=['POST'])
-# def get_gem_ai_response():
-#     # Extract prompt from the JSON payload
-#     prompt = request.json.get('prompt')
-
-#     # Check if prompt is provided
-#     if not prompt:
-#         return jsonify({'error': 'Prompt not provided.'})
-
-#     # Call Gem AI API
-#     gem_ai_response = call_gem_ai_api(prompt)
-
-#     # Return Gem AI response as JSON
-#     return jsonify({'gem_ai_response': gem_ai_response})
 
 
 @app.route("/send_point_mail",methods = ["POST"])
@@ -362,7 +285,7 @@ def expense_vinci(name, type, product):
 def create_budget():
     data = request.json["income"]
     
-    pf=f"I have {data} dollars, help me create a budget for this month for my education, medical, investment, groceries, misc and bills for a month"
+    pf=f"I have {data} dollars, help me create a budget for this month for my education, medical, investment, groceries, misc and bills for a month.Dont give bold output, keep it plain font"
     model = genai.GenerativeModel('gemini-pro')
     response = model.generate_content(pf)
     generated_text = response.text
