@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const NavbarDarkExample = ({ options, onSelect }) => {
+const NavbarDarkExample = ({ options, onSelect, ocrSelected }) => {
     const [selectedOption, setSelectedOption] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
   

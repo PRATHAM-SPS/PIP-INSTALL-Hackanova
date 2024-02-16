@@ -42,6 +42,7 @@ function Expense() {
   const [matches, setMatches] = useState([]);
 
   const [selectedOption, setSelectedOption] = useState(null);
+  const [ocrSelected, setOcrSelected] = useState(null);
   const [amount, setAmount] = useState(null);
   const [category, setCategory] = useState(null);
   const [product, setProduct] = useState(null);
@@ -55,17 +56,13 @@ function Expense() {
       const formData = new FormData();
       formData.append('image', image);
       const response = await axios.post('http://localhost:4000/ocr', formData);
-      setMatches(response.data.matches);
-      const amountMatch = response.data.matches[0];
-      if (amountMatch) {
-        setAmount(amountMatch);
-      }
+      console.log(response.data)
+      setAmount(response.data[0])
+      setProduct(response.data[1])
     } catch (error) {
       console.error(error);
     }
   };
-
-
 
   const [previoustotal, setPrevioustotal] = useState(null)
   const [previouscategory, setPreviouscategory] = useState(null)
@@ -96,7 +93,6 @@ function Expense() {
       console.log("Error getting documents: ", error);
     });
   };
-
 
 
   const balanceref = doc(fs, "kshitij", monthName + " Expense")
@@ -304,7 +300,7 @@ const simpleDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
               />
             </GradientBorder>
           </VuiBox>
-          <NavbarDarkExample options={options} onSelect={handleSelect} />
+          <NavbarDarkExample options={options} onSelect={handleSelect} ocrSelected={ocrSelected} />
 
           <VuiBox mt={4} mb={1}>
             <VuiButton color="info" fullWidth onClick={onSubmit}>

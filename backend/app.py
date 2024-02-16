@@ -15,12 +15,15 @@ import speech_recognition as sr
 import pytesseract
 from PIL import Image
 import re
+from io import BytesIO
 
 app = Flask(__name__)
 CORS(app)
 
 chat_sum = " "
 
+geminikey="AIzaSyD17qzyJMl5wjkj79jvpiUSfjA_dv9-dPw"
+genai.configure(api_key = geminikey)
 
 @app.route('/send_mail', methods=['POST'])
 def send_mail(name = "Rishabh"):
@@ -60,20 +63,28 @@ def space_file():
     file = request.files['image']
     print('Uploaded file:', file.filename)
     overlay = False
-    api_key = 'K89580507588957'
+    api_key = 'K86135191988957'
     language = 'eng'
     payload = {'isOverlayRequired': overlay,
                'apikey': api_key,
                'language': language}
     response = requests.post('https://api.ocr.space/parse/image',
                              data=payload,
-                             files={'image': file.read()})
-    money_pattern = r'\w+'
-    matches = re.findall(money_pattern, response.content.decode())
-    print(matches)
-    matches = ocr_space_file(file.filename)
-
-    return {'matches': matches}
+                             files={'image': (file.filename, file, file.content_type)})
+    result = response.json()
+    if result['IsErroredOnProcessing']:
+        print('Error:', result['ErrorMessage'])
+        return {'error': result['ErrorMessage']}
+    else:
+        pf = f"{result['ParsedResults'][0]['ParsedText']} You are a financial advisor analyse this find the cost, product and classify it into one of this category [bills, grocery, education, misc, investment, medical]. Give the output as cost, product, category Give me comma separated values. give strictly in this format. Don't give me in key-value pair"
+        model = genai.GenerativeModel('gemini-pro')
+        instructions = model.generate_content(pf)
+        print(instructions.text)
+        return instructions.text.split(',')
+        # money_pattern = r'\w+'
+        # matches = re.findall(money_pattern, result['ParsedResults'][0]['ParsedText'])
+        # print(matches)
+        # return {'matches': matches}
 
 @app.route('/forecast-spending', methods = ['POST'])
 def forecast_spending():
@@ -92,8 +103,6 @@ def forecast_spending():
     print(prediction2)
     return ({{"name":"Credit Card Payment", "data":prediction1.tolist()}, {"name": "Home Improvement", "data":prediction2.tolist()}})
 
-geminikey="AIzaSyD17qzyJMl5wjkj79jvpiUSfjA_dv9-dPw"
-genai.configure(api_key = geminikey)
 
 @app.route('/product', methods=['POST'])
 def get_product_info():
