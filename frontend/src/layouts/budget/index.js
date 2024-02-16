@@ -133,7 +133,7 @@ function Budget() {
         <VuiBox mb={2}>
           <VuiBox mb={1} ml={0.5}>
             <VuiTypography component="label" variant="button" color="white" fontWeight="medium">
-              Income in Terras
+              Income in Buddys
             </VuiTypography>
           </VuiBox>
           <GradientBorder
@@ -322,7 +322,7 @@ function Budget() {
           <VuiBox mb={2}>
             <VuiBox mb={1} ml={0.5}>
               <VuiTypography component="label" variant="button" color="white" fontWeight="medium">
-                Income in Terras
+                Income in Buddys
               </VuiTypography>
             </VuiBox>
             <GradientBorder

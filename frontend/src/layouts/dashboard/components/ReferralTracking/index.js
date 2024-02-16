@@ -45,7 +45,7 @@ function ReferralTracking() {
 					sx={{ width: '100%' }}
 					mb='40px'>
 					<VuiTypography variant='lg' color='white' mr='auto' fontWeight='bold'>
-						Terra Score Tracker
+						Buddy Score Tracker
 					</VuiTypography>
 					<VuiBox
 						display='flex'
@@ -175,7 +175,7 @@ function ReferralTracking() {
 									{ (parseInt(renewable, 10) / parseInt(total, 10) * 10).toFixed(1)}
 								</VuiTypography>
 								<VuiTypography color='text' variant='button'>
-									Terra Grade
+									Buddy Grade
 								</VuiTypography>
 							</VuiBox>
 						</VuiBox>

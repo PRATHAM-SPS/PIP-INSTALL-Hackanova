@@ -11,10 +11,6 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Table from "examples/Tables/Table";
 
-// Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
-
 import { db } from "layouts/authentication/firebase";
 import { onValue, ref } from "firebase/database";
 
@@ -128,6 +124,13 @@ const ChatPage = () => {
       recognition.stop();
       setListening(false);
     }
+  };
+
+  const speak = (text) => {
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    synth.speak(utterance);
   };
 
   return (

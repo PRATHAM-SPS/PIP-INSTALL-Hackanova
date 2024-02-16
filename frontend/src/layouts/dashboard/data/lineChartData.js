@@ -18,7 +18,7 @@
 
 export const lineChartDataDashboard = [
   {
-    name: "Terra Card Payments",
+    name: "Buddy Card Payments",
     data: [365.48, 555.99, 365.48, 553.51, 761.59, 629.21],
   },
   {

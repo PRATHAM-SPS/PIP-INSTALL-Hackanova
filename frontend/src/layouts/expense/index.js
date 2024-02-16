@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
+import React from 'react';
 
+import MicIcon from '@mui/icons-material/Mic';
 // PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
@@ -176,7 +178,7 @@ const simpleDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
             totaltransaction: totaltransaction + 1
           });
           console.log("renewable")
-          setMessage("Bravo! you won two Terra Rewards")
+          setMessage("Bravo! you won two Buddy Rewards")
           axios.post("http://localhost:4000/send_point_mail", { "product": product, "type": "gain" }).then(e => console.log(e))
         } catch (e) {
           console.log(e)
@@ -188,7 +190,7 @@ const simpleDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
             totaltransaction: totaltransaction + 1
           });
           console.log("non-renewable")
-          setMessage("You lost 1 Terra Reward, try to use renewable resource next time")
+          setMessage("You lost 1 Buddy Reward, try to use renewable resource next time")
           axios.post("http://localhost:4000/send_point_mail", { "product": product, "type": "loss" }).then(e => console.log(e))
 
         } catch (e) {
@@ -266,8 +268,40 @@ const simpleDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
             or
           </VuiTypography>
           <div>
-            <input type="file" onChange={handleImageChange} />
-            <button onClick={handleOCR}>OCR</button>
+          <input
+    type="file"
+    onChange={handleImageChange}
+    style={{
+      display: 'none', // hide the default file input
+    }}
+    id="uploadInput"
+  />
+  <label
+    htmlFor="uploadInput"
+    style={{
+      cursor: 'pointer',
+      padding: '10px 15px',
+      backgroundColor: '#2196F3',
+      color: '#fff',
+      borderRadius: '5px',
+      marginRight: '10px',
+    }}
+  >
+    Choose File
+  </label>
+  <button
+    onClick={handleOCR}
+    style={{
+      cursor: 'pointer',
+      padding: '10px 15px',
+      backgroundColor: '#2196F3',
+      color: '#fff',
+      borderRadius: '5px',
+      border: 'none',
+    }}
+  >
+    OCR
+  </button>
             {/* {matches.map((match, index) => (
         <div key={index}>{match}</div>
       ))} */}
@@ -308,7 +342,7 @@ const simpleDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
             </VuiButton>
           </VuiBox>
 
-          {message == "You lost 1 Terra Reward, try to use renewable resource next time" ?
+          {message == "You lost 1 Buddy Reward, try to use renewable resource next time" ?
             (<VuiBox mb={1} ml={0.5}>
               <VuiTypography component="label" variant="button" color="error" fontWeight="medium">
                 {message}

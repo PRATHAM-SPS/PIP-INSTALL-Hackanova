@@ -154,7 +154,7 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "Your Terra Points", fontWeight: "regular" }}
+                title={{ text: "Your Buddy Points", fontWeight: "regular" }}
                 count={{ color: "success", text: points }}
                 icon={{
                   color: "info",
