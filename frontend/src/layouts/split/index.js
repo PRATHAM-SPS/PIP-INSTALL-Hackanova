@@ -27,17 +27,17 @@ import bgSignIn from "assets/images/signInImage.png";
 
 function Split() {
 
-    const amt = 0;
-    const email = "";
+    const [amt, setAmt] = useState(0);
+    const [email, setEmail] = useState("");
 
 
-    const onSubmit = async (e) => {
-        setSplit(split)
+    // const onSubmit = async (e) => {
+    //     setSplit(e.target.valueAsNumber / 2)
 
-        setMessage("You lost 1 Terra Reward, try to use renewable resource next time")
-        axios.post("http://localhost:4000/send_point_mail", { "email": email, "amt": amt }).then(e => console.log(e))
+    //     setMessage("You lost 1 Terra Reward, try to use renewable resource next time")
+    //     // axios.post("http://localhost:4000/send_point_mail", { "email": email, "amt": amt }).then(e => console.log(e))
 
-    }
+    // }
 
     return (
         (<CoverLayout
@@ -67,8 +67,8 @@ function Split() {
                         )}
                     >
                         <VuiInput
-                            value="Hello"
-                            onChange={(e) => setEmail(e.target.valueAsNumber)}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             type='text'
                             placeholder="Education Expenditure"
                             sx={({ typography: { size } }) => ({
@@ -95,7 +95,7 @@ function Split() {
                     >
                         <VuiInput
                             value={amt}
-                            onChange={(e) => setBills(e.target.valueAsNumber)}
+                            onChange={(e) => setAmt(e.target.valueAsNumber)}
                             type="number"
                             placeholder="Your monthly bills"
                             sx={({ typography: { size } }) => ({
@@ -107,7 +107,7 @@ function Split() {
 
 
                 <VuiBox mt={4} mb={1}>
-                    <VuiButton color="info" onClick={onSubmit} fullWidth>
+                    <VuiButton color="info" fullWidth>
                         SPLIT THE BILL
                     </VuiButton>
                 </VuiBox>
@@ -124,82 +124,7 @@ function Split() {
                     </VuiBox>)}
             </VuiBox>
         </CoverLayout>)
-            (<CoverLayout
-                title="Split the Bill with Ease"
-                color="white"
-                description="Enter your friend's email seperated by a single comma (,)"
-                premotto="INSPIRED BY THE PRESENT"
-                motto="A treat for your friends and a treat for your pocket"
-                image={bgSignIn}
-            >
-                <VuiBox component="form" role="form">
-                    <VuiBox mb={2}>
-                        <VuiBox mb={1} ml={0.5}>
-                            <VuiTypography component="label" variant="button" color="white" fontWeight="medium">
-                                E-mails
-                            </VuiTypography>
-                        </VuiBox>
-                        <GradientBorder
-                            minWidth="100%"
-                            borderRadius={borders.borderRadius.lg}
-                            padding="1px"
-                            backgroundImage={radialGradient(
-                                palette.gradients.borderLight.main,
-                                palette.gradients.borderLight.state,
-                                palette.gradients.borderLight.angle
-                            )}
-                        >
-                            <VuiInput disabled
-                                value={email}
-                                onChange={(e) => setEmail(e.target.valueAsNumber)}
-                                type="number"
-                                placeholder="Education Expenditure"
-                                sx={({ typography: { size } }) => ({
-                                    fontSize: size.sm,
-                                })}
-                            />
-                        </GradientBorder>
-                    </VuiBox>
-                    <VuiBox mb={2}>
-                        <VuiBox mb={1} ml={0.5}>
-                            <VuiTypography component="label" variant="button" color="white" fontWeight="medium">
-                                Bill Amount
-                            </VuiTypography>
-                        </VuiBox>
-                        <GradientBorder
-                            minWidth="100%"
-                            borderRadius={borders.borderRadius.lg}
-                            padding="1px"
-                            backgroundImage={radialGradient(
-                                palette.gradients.borderLight.main,
-                                palette.gradients.borderLight.state,
-                                palette.gradients.borderLight.angle
-                            )}
-                        >
-                            <VuiInput disabled
-                                value={amt}
-                                onChange={(e) => setBills(e.target.valueAsNumber)}
-                                type="number"
-                                placeholder="Your monthly bills"
-                                sx={({ typography: { size } }) => ({
-                                    fontSize: size.sm,
-                                })}
-                            />
-                        </GradientBorder>
-                    </VuiBox>
 
-
-                    <VuiBox mt={4} mb={1}>
-                        <VuiButton color="info" onClick={onSubmit} fullWidth disabled>
-                            SPLIT THE BILL
-                        </VuiButton>
-                    </VuiBox><VuiBox mb={1} ml={0.5}>
-                        <VuiTypography component="label" variant="button" color="success" fontWeight="medium">
-                            "Your friends have been notified!"
-                        </VuiTypography>
-                    </VuiBox>
-                </VuiBox>
-            </CoverLayout>)
     );
 }
 
