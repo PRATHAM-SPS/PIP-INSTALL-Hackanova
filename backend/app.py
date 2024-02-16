@@ -25,10 +25,10 @@ for cat in categories:
 print(models.keys())
 
 @app.route('/send_mail', methods=['POST'])
-def send_mail(receiver_email='chinmaysonawane57@gmail.com',name = "Kshitij",category = "Shopping"):
+def send_mail(name = "Rishabh"):
     category = request.json["category"]
 # Email account credentials
-    body = "\nDear "+name+",\n\nYour expenditure in "+category+" has exceeded the budget limit set for this category. We urge you to take immediate action to address this situation and bring your spending in line with the budget limit. Failure to do so may have a negative impact on your overall financial position and hinder your ability to achieve your financial goals.\n\nAs a budget monitoring company, we understand the importance of financial prudence and effective resource management. We offer budget monitoring and management solutions that can assist you in managing your finances effectively. Please contact us if you require any assistance.\n\nBest regards,\n\nTaher Barwaniwala\n\nTerraFinances"
+    body = "\nDear "+name+",\n\nYour expenditure in "+category+" has exceeded the budget limit set for this category. We urge you to take immediate action to address this situation and bring your spending in line with the budget limit. Failure to do so may have a negative impact on your overall financial position and hinder your ability to achieve your financial goals.\n\nAs a budget monitoring company, we understand the importance of financial prudence and effective resource management. We offer budget monitoring and management solutions that can assist you in managing your finances effectively. Please contact us if you require any assistance.\n\nBest regards,\n\nTaher Barwaniwala\nTerraFinances"
     sender_email = 'barwaniwalataher6@outlook.com'
     sender_password = '_Taher@2002'
     receiver_email = 'tripathirishi80@gmail.com'
@@ -135,13 +135,12 @@ def get_product_info():
 
 
 @app.route("/send_point_mail",methods = ["POST"])
-def send_point_mail(receiver_email='barwaniwalataher6@gmail.com',name = "Kshitij"):
+def send_point_mail(receiver_email='barwaniwalataher6@gmail.com'):
     product = request.json["product"]
     type = request.json["type"]
-    # product = "Oxygen"
-    # type = "loss"
+
 # Email account credentials
-    body = expense_vinci(type=type,product = product)
+    body = expense_vinci(name='Rishabh', type=type,product = product)
     sender_email = 'barwaniwalataher6@outlook.com'
     sender_password = '_Taher@2002'
     receiver_email = 'tripathirishi80@gmail.com'
@@ -172,9 +171,9 @@ def send_point_mail(receiver_email='barwaniwalataher6@gmail.com',name = "Kshitij
 
 
 
-def expense_vinci(type="earn",product = "Oxygen"):
+def expense_vinci(name, type, product): 
     
-    pf = f"Write a Mail body stating you got {type} points and suggest reneawable and sustainable alternative of {product} to them."
+    pf = f"Write a Mail body to {name} stating you got {type} points and suggest renewable and sustainable alternative of {product} to them."
 
     model = genai.GenerativeModel('gemini-pro')
     instructions = model.generate_content(pf)
