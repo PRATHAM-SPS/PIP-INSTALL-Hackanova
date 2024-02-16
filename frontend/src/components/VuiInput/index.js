@@ -27,7 +27,7 @@ import VuiInputWithIconRoot from "components/VuiInput/VuiInputWithIconRoot";
 import VuiInputIconBoxRoot from "components/VuiInput/VuiInputIconBoxRoot";
 import VuiInputIconRoot from "components/VuiInput/VuiInputIconRoot";
 
-// Bootstrap Paradox Dashboard React contexts
+// PIP INSTALL Dashboard React contexts
 import { useVisionUIController } from "context";
 
 const VuiInput = forwardRef(({ size, icon, error, success, disabled, ...rest }, ref) => {

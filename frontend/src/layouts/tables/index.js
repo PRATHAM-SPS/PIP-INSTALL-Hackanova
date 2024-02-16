@@ -66,6 +66,7 @@ function Tables() {
           >
             <Table columns={prCols} rows={prRows} />
             <table>
+
               {/* <thead>
                 <tr>
                   <th>Account Name</th>
@@ -92,6 +93,7 @@ function Tables() {
               </tbody>
 
             </table>
+
 
 
             {

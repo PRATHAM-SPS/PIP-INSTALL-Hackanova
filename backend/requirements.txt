@@ -5,3 +5,5 @@ numpy
 pandas
 openai
 statsmodels
+google-generativeai
+SpeechRecognition

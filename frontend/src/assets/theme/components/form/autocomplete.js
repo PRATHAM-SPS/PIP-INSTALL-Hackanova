@@ -16,13 +16,13 @@
 
 */
 
-// Bootstrap Paradox Dashboard React base styles
+// PIP INSTALL Dashboard React base styles
 import boxShadows from "assets/theme/base/boxShadows";
 import typography from "assets/theme/base/typography";
 import colors from "assets/theme/base/colors";
 import borders from "assets/theme/base/borders";
 
-// Bootstrap Paradox Dashboard React helper functions
+// PIP INSTALL Dashboard React helper functions
 import pxToRem from "assets/theme/functions/pxToRem";
 
 const { lg } = boxShadows;

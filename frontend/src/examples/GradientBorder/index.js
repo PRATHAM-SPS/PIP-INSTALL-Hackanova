@@ -16,10 +16,10 @@
 
 */
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 
-// Bootstrap Paradox Dashboard React context
+// PIP INSTALL Dashboard React context
 
 function GradientBorder(props) {
   const { backgroundImage, children, borderRadius, width, minWidth, ...rest } = props;

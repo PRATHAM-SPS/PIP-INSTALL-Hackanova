@@ -25,7 +25,7 @@ import PropTypes from "prop-types";
 // @mui material components
 import Tooltip from "@mui/material/Tooltip";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiButton from "components/VuiButton";

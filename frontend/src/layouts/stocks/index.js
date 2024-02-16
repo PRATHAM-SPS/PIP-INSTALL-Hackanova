@@ -1,3 +1,4 @@
+
 // @mui material components
 import Card from "@mui/material/Card";
 
@@ -167,5 +168,6 @@ const ChatPage = () => {
     </DashboardLayout>
   );
 };
+
 
 export default ChatPage;

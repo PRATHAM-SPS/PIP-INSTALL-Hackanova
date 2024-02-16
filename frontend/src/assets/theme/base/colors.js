@@ -1,7 +1,7 @@
 /** 
 
 =========================================================
-* Bootstrap Paradox  React - v1.0.0
+* PIP INSTALL  React - v1.0.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/vision-ui-pro-react
@@ -16,13 +16,13 @@
 */
 
 /**
- * The base colors for the Bootstrap Paradox Dashboard  Material.
+ * The base colors for the PIP INSTALL Dashboard  Material.
  * You can add new color using this file.
- * You can customized the colors for the entire Bootstrap Paradox Dashboard  Material using thie file.
+ * You can customized the colors for the entire PIP INSTALL Dashboard  Material using thie file.
  */
 
 export default {
-  // Bootstrap Paradox Colors
+  // PIP INSTALL Colors
   background: {
     default: "#f8f9fa",
   },

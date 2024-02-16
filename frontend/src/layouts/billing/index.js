@@ -1,12 +1,12 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import MasterCard from "examples/Cards/MasterCard";
-// Bootstrap Paradox Dashboard React example components
+// PIP INSTALL Dashboard React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 

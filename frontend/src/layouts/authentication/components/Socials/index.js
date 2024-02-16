@@ -16,7 +16,7 @@
 
 */
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiButton from "components/VuiButton";
 import VuiBox from "components/VuiBox";
 
