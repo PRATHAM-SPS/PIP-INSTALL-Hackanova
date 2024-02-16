@@ -125,8 +125,8 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Stocks",
-    key: "stocks",
+    name: "Chatbot",
+    key: "Chatbot",
     route: "/stocks",
     icon: <IoRocketSharp size="15px" color="inherit" />,
     component: Stocks,

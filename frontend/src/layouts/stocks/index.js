@@ -1,11 +1,11 @@
 // @mui material components
 import Card from "@mui/material/Card";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 
-// Bootstrap Paradox Dashboard React example components
+// PIP INSTALL Dashboard React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Table from "examples/Tables/Table";
@@ -18,166 +18,154 @@ import { db } from "layouts/authentication/firebase";
 import { onValue, ref } from "firebase/database";
 
 import { useState, useEffect } from "react";
+import axios from 'axios';
 
+import { makeStyles } from "@mui/styles";
 
-function Stocks() {
-  const { columns, rows } = authorsTableData;
-  const { columns: prCols, rows: prRows } = projectsTableData;
+const useStyles = makeStyles((theme) => ({
+  chatContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    maxWidth: 400,
+    margin: "0 auto",
+  },
+  chatMessages: {
+    minHeight: 200,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderRadius: theme.shape.borderRadius,
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    overflowY: "auto",
+  },
+  inputContainer: {
+    display: "flex",
+    alignItems: "center",
+  },
+  inputField: {
+    flex: 1,
+    marginRight: theme.spacing(2),
+    padding: theme.spacing(1),
+    border: `1px solid ${theme.palette.primary.main}`,
+    borderRadius: theme.shape.borderRadius,
+  },
+  sendButton: {
+    cursor: "pointer",
+    background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.primary.dark} 90%)`,
+    color: theme.palette.common.white,
+    padding: theme.spacing(1),
+    borderRadius: theme.shape.borderRadius,
+    border: 0,
+    "&:hover": {
+      background: `linear-gradient(45deg, ${theme.palette.primary.dark} 30%, ${theme.palette.primary.main} 90%)`,
+    },
+  },
+  voiceButton: {
+    cursor: "pointer",
+    background: `linear-gradient(45deg, ${theme.palette.secondary.main} 30%, ${theme.palette.secondary.dark} 90%)`,
+    color: theme.palette.common.white,
+    padding: theme.spacing(1),
+    borderRadius: theme.shape.borderRadius,
+    border: 0,
+    marginLeft: theme.spacing(2),
+    "&:hover": {
+      background: `linear-gradient(45deg, ${theme.palette.secondary.dark} 30%, ${theme.palette.secondary.main} 90%)`,
+    },
+  },
+}));
 
-  const [stocks, setStocks] = useState([]);
-
-  const [text, setText] = useState("");
+const ChatPage = () => {
+  const classes = useStyles();
+  const [chatMessages, setChatMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const recognition = new window.webkitSpeechRecognition();
+  const [listening, setListening] = useState(false);
 
   useEffect(() => {
-    const query = ref(db, "/stocks");
-    return onValue(query, (snapshot) => {
-      const data = snapshot.val();
+    recognition.onresult = (event) => {
+      const result = event.results[0][0].transcript;
+      setInputMessage(result);
+      recognition.stop();
+      setListening(false);
+    };
 
-      if (snapshot.exists()) {
-        setStocks([data]);
-      }
-    });
+    recognition.onend = () => {
+      setListening(false);
+    };
   }, []);
 
-  const symbolTextMap = {
-    "NOVABANK": "This futuristic bank has adopted sustainable techniques to keep track of Terra Coins and even create them with least carbon emission.",
-    "TERAT-AUTO": "These electric automobiles company is leading the way to an environment friendly transportation manufacturing.",
-    "BPCL": "BPCL has revolutionized housing systems by creating anti-pollution paint that captures dust and emissions molecules and disintegrates them to their non-existence. ",
-    "DIVISLAB" : "This green house energy company has been leading the way for energy consumption on Tera Nova with a focus on protecting it by not repeating the mistakes done on planet Earth.   ",
-    "TETTRECH" : "This fashionable store has been using environment friendly production techniques that is benefitting the planet without dropping on the fashion scale."
+  const handleSendMessage = async () => {
+    if (inputMessage.trim() !== '') {
+      setChatMessages((prevMessages) => [
+        ...prevMessages,
+        { type: 'user', text: inputMessage },
+      ]);
+
+      try {
+        const response = await axios.post('http://localhost:4000/get_bot_response', {
+          userMessage: inputMessage,
+        });
+
+        const botResponse = response.data.botResponse;
+        setChatMessages((prevMessages) => [
+          ...prevMessages,
+          { type: 'bot', text: botResponse },
+        ]);
+      } catch (error) {
+        console.error('Error fetching bot response:', error);
+      }
+
+      setInputMessage('');
+    }
+  };
+
+  const handleVoiceButtonClick = () => {
+    if (!listening) {
+      recognition.start();
+      setListening(true);
+    } else {
+      recognition.stop();
+      setListening(false);
+    }
   };
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <VuiBox py={3}>
-        <VuiBox mb={3}>
-          
-        </VuiBox>
+      <VuiBox py={3} className={classes.chatContainer}>
         <Card>
-          <VuiBox display="flex" justifyContent="space-between" alignItems="center">
+          <VuiBox display="flex" justifyContent="space-between" alignItems="center" padding={2}>
             <VuiTypography variant="lg" color="white">
-              User's Stocks
+              Chat with the Stylish ChatBot
             </VuiTypography>
           </VuiBox>
-          <VuiBox
-            sx={{
-              "& th": {
-                borderBottom: ({ borders: { borderWidth }, palette: { grey } }) =>
-                  `${borderWidth[1]} solid ${grey[700]}`,
-              },
-              "& .MuiTableRow-root:not(:last-child)": {
-                "& td": {
-                  borderBottom: ({ borders: { borderWidth }, palette: { grey } }) =>
-                    `${borderWidth[1]} solid ${grey[700]}`,
-                },
-              },
-            }}
-          >
-            {/* <Table columns={prCols} rows={prRows} /> */}
-            <table>
-        <thead>
-          <tr>
-            <th>30 d % chng</th>
-            <th>Holding</th>
-            <th>Market</th>
-            <th>Open</th>
-            {/* <th>Sustainable</th> */}
-            <th>Symbol</th>
-          </tr>
-        </thead>
-        <tbody>
-  {stocks.map((stockArray, index) => (
-    stockArray
-      .filter((stock) => stock["Holding"] > 0)
-      .map((stock, innerIndex) => (
-        <tr key={`${index}-${innerIndex}`}>
-          <td>{stock["30 d % chng"]}</td>
-          <td>{stock["Holding"]}</td>
-          <td>{stock["Market"]}</td>
-          <td>{stock["Open"]}</td>
-          {/* <td>{stock["Sustainable"]}</td> */}
-          <td>{stock["Symbol"]}</td>
-        </tr>
-      ))
-  ))}
-</tbody>
-
-      </table>
-
-
-            {
-              console.log(stocks)
-            }
+          <VuiBox className={classes.chatMessages}>
+            {chatMessages.map((message, index) => (
+              <div key={index} style={{ marginBottom: 10, color: message.type === 'user' ? '#2196F3' : '#4CAF50' }}>
+                {message.type === 'user' ? 'You: ' : 'Bot: '}
+                {message.text}
+              </div>
+            ))}
           </VuiBox>
-        </Card>
-        <br></br>
-        <Card>
-          <VuiBox display="flex" justifyContent="space-between" alignItems="center">
-            <VuiTypography variant="lg" color="white">
-              Recommended Stocks
-            </VuiTypography>
-          </VuiBox>
-          <VuiBox
-            sx={{
-              "& th": {
-                borderBottom: ({ borders: { borderWidth }, palette: { grey } }) =>
-                  `${borderWidth[1]} solid ${grey[700]}`,
-              },
-              "& .MuiTableRow-root:not(:last-child)": {
-                "& td": {
-                  borderBottom: ({ borders: { borderWidth }, palette: { grey } }) =>
-                    `${borderWidth[1]} solid ${grey[700]}`,
-                },
-              },
-            }}
-          >
-            {/* <Table columns={prCols} rows={prRows} /> */}
-            <table>
-        <thead>
-          <tr>
-            <th>30 d % chng</th>
-            <th>Holding</th>
-            <th>Market</th>
-            <th>Open</th>
-            {/* <th>Sustainable</th> */}
-            <th>Symbol</th>
-          </tr>
-        </thead>
-        <tbody>
-  {stocks
-    .filter((stockArray) => stockArray.some((stock) => stock["Sustainable"] === 1 && stock["Holding"] === ""))
-    .slice(0, 5)
-    .flatMap((stockArray, index) =>
-      stockArray
-        .filter((stock) => stock["Sustainable"] === 1 && stock["Holding"] === "")
-        .slice(0, 5)
-        .map((stock, innerIndex) => (
-          <tr key={`${index}-${innerIndex}`}>
-            <td>{stock["30 d % chng"]}</td>
-            <td>{stock["Holding"]}</td>
-            <td>{stock["Market"]}</td>
-            <td>{stock["Open"]}</td>
-            {/* <td>{stock["Sustainable"]}</td> */}
-            <td onClick={() => setText(symbolTextMap[stock["Symbol"]])}>{stock["Symbol"]}</td>
-          </tr>
-        ))
-    )}
-
-</tbody>
-      </table>
-      <br></br>
-      {text && <div>{text}</div>}
-
-
-            {
-              console.log(stocks)
-            }
+          <VuiBox className={classes.inputContainer} padding={2}>
+            <input
+              type="text"
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              placeholder="Type your message..."
+              className={classes.inputField}
+            />
+            <button className={classes.sendButton} onClick={handleSendMessage}>
+              Send
+            </button>
+            <button className={classes.voiceButton} onClick={handleVoiceButtonClick}>
+              {listening ? 'Stop Listening' : 'Start Listening'}
+            </button>
           </VuiBox>
         </Card>
       </VuiBox>
     </DashboardLayout>
   );
-}
+};
 
-export default Stocks;
+export default ChatPage;
