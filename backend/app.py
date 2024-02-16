@@ -12,6 +12,9 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import google.generativeai as genai
 import speech_recognition as sr
+import pytesseract
+from PIL import Image
+import re
 
 app = Flask(__name__)
 CORS(app)
@@ -56,18 +59,18 @@ def send_mail(name = "Rishabh"):
 def space_file():
     file = request.files['image']
     print('Uploaded file:', file.filename)
-    # overlay = False
-    # api_key = 'K89580507588957'
-    # language = 'eng'
-    # payload = {'isOverlayRequired': overlay,
-    #            'apikey': api_key,
-    #            'language': language}
-    # response = requests.post('https://api.ocr.space/parse/image',
-    #                          data=payload,
-    #                          files={'image': file.read()})
-    # money_pattern = r'(?:USD\s*)?\$\d+(?:\.\d{2})?'
-    # matches = re.findall(money_pattern, response.content.decode())
-    # print(matches)
+    overlay = False
+    api_key = 'K89580507588957'
+    language = 'eng'
+    payload = {'isOverlayRequired': overlay,
+               'apikey': api_key,
+               'language': language}
+    response = requests.post('https://api.ocr.space/parse/image',
+                             data=payload,
+                             files={'image': file.read()})
+    money_pattern = r'\w+'
+    matches = re.findall(money_pattern, response.content.decode())
+    print(matches)
     matches = ocr_space_file(file.filename)
 
     return {'matches': matches}
