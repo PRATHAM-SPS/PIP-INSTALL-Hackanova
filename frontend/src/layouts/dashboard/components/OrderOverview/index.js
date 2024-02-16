@@ -19,7 +19,7 @@
 // @mui material components
 import Card from "@mui/material/Card";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 
@@ -31,11 +31,11 @@ import { FaShoppingCart } from "react-icons/fa";
 import { BsCreditCardFill } from "react-icons/bs";
 import { SiDropbox } from "react-icons/si";
 
-// Bootstrap Paradox Dashboard React example components
+// PIP INSTALL Dashboard React example components
 import TimelineItem from "examples/Timeline/TimelineItem";
 import AdobeXD from "examples/Icons/AdobeXD";
 
-// Bootstrap Paradox Dashboard theme imports
+// PIP INSTALL Dashboard theme imports
 import palette from "assets/theme/base/colors";
 
 function OrdersOverview() {

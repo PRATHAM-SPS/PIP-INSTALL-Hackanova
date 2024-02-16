@@ -16,12 +16,12 @@
 
 */
 
-// Bootstrap Paradox Dashboard React Base Styles
+// PIP INSTALL Dashboard React Base Styles
 import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 import borders from "assets/theme/base/borders";
 
-// Bootstrap Paradox Dashboard  helper functions
+// PIP INSTALL Dashboard  helper functions
 import pxToRem from "assets/theme/functions/pxToRem";
 
 const { dark, white, grey, inputColors } = colors;

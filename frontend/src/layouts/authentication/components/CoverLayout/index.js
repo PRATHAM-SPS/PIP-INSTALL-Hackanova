@@ -1,21 +1,21 @@
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 
-// Bootstrap Paradox Dashboard React example components
+// PIP INSTALL Dashboard React example components
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 
 // Authentication layout components
 import Footer from "layouts/authentication/components/Footer";
 
-// Bootstrap Paradox Dashboard React theme functions
+// PIP INSTALL Dashboard React theme functions
 import colors from "assets/theme/base/colors";
 
-// Bootstrap Paradox Dashboard React theme functions
+// PIP INSTALL Dashboard React theme functions
 import tripleLinearGradient from "assets/theme/functions/tripleLinearGradient";
 
 function CoverLayout({

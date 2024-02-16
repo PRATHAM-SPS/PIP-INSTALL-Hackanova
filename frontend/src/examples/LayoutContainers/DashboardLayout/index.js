@@ -24,10 +24,10 @@ import { useLocation } from "react-router-dom";
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 
-// Bootstrap Paradox Dashboard React context
+// PIP INSTALL Dashboard React context
 import { useVisionUIController, setLayout } from "context";
 
 function DashboardLayout({ children }) {

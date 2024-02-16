@@ -23,10 +23,10 @@ import PropTypes from "prop-types";
 import Menu from "@mui/material/Menu";
 // import Grid from "@mui/material/Grid";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 
-// Bootstrap Paradox Dashboard React example components
+// PIP INSTALL Dashboard React example components
 import DefaultNavbarLink from "examples/Navbars/DefaultNavbar/DefaultNavbarLink";
 import palette from "assets/theme/base/colors";
 import tripleLinearGradient from "assets/theme/functions/tripleLinearGradient";

@@ -24,7 +24,7 @@ import PropTypes from "prop-types";
 // @mui material components
 import Fade from "@mui/material/Fade";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 
 // Custom styles for the VuiAlert

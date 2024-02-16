@@ -23,11 +23,11 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 
-// Bootstrap Paradox Dashboard React base styles
+// PIP INSTALL Dashboard React base styles
 import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    maxWidth: 400,
+    width: 1000,
     margin: "0 auto",
   },
   chatMessages: {

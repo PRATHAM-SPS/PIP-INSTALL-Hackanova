@@ -16,7 +16,7 @@
 
 */
 
-// Bootstrap Paradox Dashboard React Helper Functions
+// PIP INSTALL Dashboard React Helper Functions
 import pxToRem from "assets/theme/functions/pxToRem";
 
 export default {

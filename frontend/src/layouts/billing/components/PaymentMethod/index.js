@@ -4,18 +4,18 @@ import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 import Tooltip from "@mui/material/Tooltip";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiButton from "components/VuiButton";
 
-// Bootstrap Paradox Dashboard React base styles
+// PIP INSTALL Dashboard React base styles
 import borders from "assets/theme/base/borders";
 
 // Images
 import colors from "assets/theme/base/colors";
 
-// Bootstrap Paradox Dashboard component exemples
+// PIP INSTALL Dashboard component exemples
 import Mastercard from "examples/Icons/Mastercard";
 import Visa from "examples/Icons/Visa";
 

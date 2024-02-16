@@ -16,7 +16,7 @@
 
 */
 
-// Bootstrap Paradox Dashboard React Base Styles
+// PIP INSTALL Dashboard React Base Styles
 import colors from "assets/theme/base/colors";
 
 const { transparent } = colors;

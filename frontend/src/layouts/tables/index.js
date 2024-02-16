@@ -64,9 +64,9 @@ function Tables() {
               },
             }}
           >
-            {/* <Table columns={prCols} rows={prRows} /> */}
+            <Table columns={prCols} rows={prRows} />
             <table>
-        <thead>
+        {/* <thead>
           <tr>
             <th>Account Name</th>
             <th>Amount</th>
@@ -75,7 +75,7 @@ function Tables() {
             <th>Description</th>
             <th>Transaction Type</th>
           </tr>
-        </thead>
+        </thead> */}
         <tbody>
   {projects.map((projectArray, index) => (
     projectArray.map((project, innerIndex) => (

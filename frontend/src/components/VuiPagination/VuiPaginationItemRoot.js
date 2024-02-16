@@ -19,7 +19,7 @@
 // @mui material components
 import { styled } from "@mui/material/styles";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiButton from "components/VuiButton";
 
 export default styled(VuiButton)(({ theme, ownerState }) => {

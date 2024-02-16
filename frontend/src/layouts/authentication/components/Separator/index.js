@@ -19,7 +19,7 @@
 // @mui material components
 import Divider from "@mui/material/Divider";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 

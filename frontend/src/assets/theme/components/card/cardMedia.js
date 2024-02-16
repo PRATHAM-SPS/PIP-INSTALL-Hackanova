@@ -16,10 +16,10 @@
 
 */
 
-// Bootstrap Paradox Dashboard React Base Styles
+// PIP INSTALL Dashboard React Base Styles
 import borders from "assets/theme/base/borders";
 
-// Bootstrap Paradox Dashboard React Helper Functions
+// PIP INSTALL Dashboard React Helper Functions
 import pxToRem from "assets/theme/functions/pxToRem";
 
 const { borderRadius } = borders;

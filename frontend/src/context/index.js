@@ -3,13 +3,13 @@ import { createContext, useContext, useReducer } from "react";
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
-// The Bootstrap Paradox Dashboard  Material main context
+// The PIP INSTALL Dashboard  Material main context
 const VisionUI = createContext();
 
 // Setting custom name for the context which is visible on react dev tools
 VisionUI.displayName = "VisionUIContext";
 
-// Bootstrap Paradox Dashboard React reducer
+// PIP INSTALL Dashboard React reducer
 function reducer(state, action) {
   switch (action.type) {
     case "MINI_SIDENAV": {
@@ -42,7 +42,7 @@ function reducer(state, action) {
   }
 }
 
-// Bootstrap Paradox Dashboard React context provider
+// PIP INSTALL Dashboard React context provider
 function VisionUIControllerProvider({ children }) {
   const initialState = {
     miniSidenav: false,
@@ -60,7 +60,7 @@ function VisionUIControllerProvider({ children }) {
   return <VisionUI.Provider value={[controller, dispatch]}>{children}</VisionUI.Provider>;
 }
 
-// Bootstrap Paradox Dashboard React custom hook for using context
+// PIP INSTALL Dashboard React custom hook for using context
 function useVisionUIController() {
   const context = useContext(VisionUI);
 

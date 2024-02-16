@@ -11,18 +11,13 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import google.generativeai as genai
+import speech_recognition as sr
 
 app = Flask(__name__)
 CORS(app)
 
 chat_sum = " "
 
-categories = ['Shopping', 'Home Improvement', 'Foods', 'Credit Card Payment', 'Entertainment', 'Misc', 'Groceries', 'Paycheck']
-models = {}
-for cat in categories:
-    with open("models/"+cat+"_model.pkl", 'rb') as file:
-        models[cat] = pickle.load(file)
-print(models.keys())
 
 @app.route('/send_mail', methods=['POST'])
 def send_mail(name = "Rishabh"):
@@ -170,7 +165,7 @@ def get_bot_response():
     response = model.generate_content(pf)
     generated_text = response.text
 
-    chat_sum +=  " User message:"+ user_message + " Bot Answer: " + response.text
+    chat_sum +=  " User message: "+ user_message + " Bot Answer: " + response.text
     
     # Return the generated response from Gem AI
     return jsonify({'botResponse': generated_text})
@@ -290,7 +285,7 @@ def expense_vinci(name, type, product):
 def create_budget():
     data = request.json["income"]
     
-    pf=f"I have {data} dollars, help me create a budget for this month for my education, medical, investment, groceries, misc and bills for a month"
+    pf=f"I have {data} dollars, help me create a budget for this month for my education, medical, investment, groceries, misc and bills for a month.Dont give bold output, keep it plain font"
     model = genai.GenerativeModel('gemini-pro')
     response = model.generate_content(pf)
     generated_text = response.text

@@ -22,7 +22,7 @@ import CardContent from "@mui/material/CardContent";
 import Icon from "@mui/material/Icon";
 import Link from "@mui/material/Link";
 
-// Bootstrap Paradox Dashboard React components
+// PIP INSTALL Dashboard React components
 import VuiButton from "components/VuiButton";
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
@@ -30,7 +30,7 @@ import VuiTypography from "components/VuiTypography";
 // Custom styles for the SidenavCard
 import { card, cardContent, cardIconBox, cardIcon } from "examples/Sidenav/styles/sidenavCard";
 
-// Bootstrap Paradox Dashboard React context
+// PIP INSTALL Dashboard React context
 import { useVisionUIController } from "context";
 
 function SidenavCard({ color, ...rest }) {
