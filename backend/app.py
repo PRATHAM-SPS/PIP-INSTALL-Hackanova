@@ -10,7 +10,7 @@ import json
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import openai
+import google.generativeai as genai
 
 app = Flask(__name__)
 CORS(app)
@@ -94,8 +94,8 @@ def forecast_spending():
     print(prediction2)
     return ({{"name":"Credit Card Payment", "data":prediction1.tolist()}, {"name": "Home Improvement", "data":prediction2.tolist()}})
 
-openai.api_key = "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"
-model = "text-davinci-003"
+geminikey="AIzaSyDeIMfblCzN3zfBl9CBt8n12HvjQYhRANQ"
+genai.configure(api_key = geminikey)
 
 @app.route('/product', methods=['POST'])
 def get_product_info():
@@ -106,26 +106,26 @@ def get_product_info():
     if not product_name:
         return jsonify({'error': 'Product name not provided.'})
 
-    # Generate instructions
-    instructions = openai.Completion.create(
-        model=model,
-        prompt=f"Is {product_name} renewable or sustainable? Answer in only yes or no.",
-        max_tokens=200,
-    )
+    pf = f"""
+    Is {product_name} renewable or sustainable? Answer in only yes or no.
+    """
+
+    model = genai.GenerativeModel('gemini-pro')
+    instructions = model.generate_content(pf)
+    # print(response.candidates)    
+ 
 
     # Get generated text
-    generated_text = instructions.choices[0].text.strip()
+    generated_text = instructions.text
 
     # Check if the answer is "No"
     if "No" in generated_text:
         # Generate alternative
-        alternative = openai.Completion.create(
-            model=model,
-            prompt=f"Suggest renewable or sustainable alternatives to {product_name} in the year 2050",
-            max_tokens=200,
-        )
+        pf=f'''Suggest renewable or sustainable alternatives to {product_name} in the year 2050'''
+        alternative = model.generate_content(pf)
         # Get alternative text
-        alt_text = alternative.choices[0].text.strip()
+        alt_text = alternative.text
+        print(alt_text)
 
         # Return response as JSON
         return { "key" : '0'}
@@ -173,25 +173,23 @@ def send_point_mail(receiver_email='barwaniwalataher6@gmail.com',name = "Kshitij
 
 
 def expense_vinci(type="earn",product = "Oxygen"):
-    instructions = openai.Completion.create(
-        model=model,
-        prompt=f"Write a Mail body stating you got {type} points and suggest reneawable and sustainable alternative of {product} to them.",
-        max_tokens=200,
-    )
+    
+    pf = f"Write a Mail body stating you got {type} points and suggest reneawable and sustainable alternative of {product} to them."
+
+    model = genai.GenerativeModel('gemini-pro')
+    instructions = model.generate_content(pf)
     print(instructions)
-    return instructions.choices[0].text.strip()
+    return instructions.text
 
 
 @app.route('/create_budget', methods=['POST'])
 def create_budget():
     data = request.json["income"]
-    prompt = f"I have {data} dollars, help me create a budget for this month for my education, medical, investment, groceries, misc and bills for a month"
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=prompt,
-        max_tokens=200,
-    )
-    generated_text = response.choices[0].text.strip()
+    
+    pf=f"I have {data} dollars, help me create a budget for this month for my education, medical, investment, groceries, misc and bills for a month"
+    model = genai.GenerativeModel('gemini-pro')
+    response = model.generate_content(pf)
+    generated_text = response.text
 
     print(generated_text)
     return {'generated_text': generated_text}

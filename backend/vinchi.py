@@ -1,17 +1,22 @@
-import openai
+import google.generativeai as genai
 import json
+from IPython.display import Markdown
 
-openai.api_key = "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"
-total = 3500
+pf = f"""
+Requirements:
+5) Implement natural language processing (NLP) algorithms to analyze
+social media and other communication channels for real-time information
+about the disaster's impact on communities.
 
-instructions = openai.Completion.create(
-                model="text-davinci-003",
-                prompt=f"I have {total} dollars ,help me create a budget for this month for my  education, medical, investement, groceries, misc and bills for a month",
-                max_tokens=200,
-)
+How should I implement this?
+"""
+
+model = genai.GenerativeModel('gemini-pro')
+response = model.generate_content(pf)
+# print(response.candidates)
 
 
-json_string = json.dumps(instructions)
+json_string = json.dumps(response)
 json_object = json.loads(json_string)
 
 generated_text = json_object['choices'][0]['text'].strip()
