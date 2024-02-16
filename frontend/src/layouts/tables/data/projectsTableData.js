@@ -6,6 +6,9 @@ import Icon from "@mui/material/Icon";
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiProgress from "components/VuiProgress";
+import { fs } from "layouts/authentication/firebase";
+import { doc, setDoc, getDoc,getDocs, updateDoc } from "firebase/firestore";
+import { collection, query, where } from "firebase/firestore";
 
 // Images
 import AdobeXD from "examples/Icons/AdobeXD";
@@ -33,7 +36,27 @@ function Completion({ value, color }) {
     </VuiBox>
   );
 }
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+let monthIndex = (new Date().getMonth());
+let monthName = monthNames[monthIndex];
+let rows = []
+try {
+  const querySnapshot = await getDocs(collection(fs, "kshitij", `${monthName} Expense`, "transactions"));
+  rows = querySnapshot.docs.map(doc => {
+    const data = doc.data();
+    return {
+      Date: data.datetime,
+      Category: data.option,
+      Product: data.product,
+      Amount: data.amount,
+    };
+  });
 
+  // Now you can use the rows array in your component
+  console.log("Rows:", rows);
+} catch (e) {
+  console.error("Error fetching data:", e);
+}
 const action = (
   <Icon sx={{ cursor: "pointer", fontWeight: "bold" }} fontSize="small">
     more_vert
@@ -42,123 +65,10 @@ const action = (
 
 export default {
   columns: [
-    { name: "project", align: "left" },
-    { name: "budget", align: "left" },
-    { name: "status", align: "left" },
-    { name: "completion", align: "center" },
-    { name: "action", align: "center" },
+    { name: "Date", align: "left" },
+    { name: "Category", align: "left" },
+    { name: "Product", align: "left" },
+    { name: "Amount", align: "center" },
   ],
-
-  rows: [
-    {
-      project: (
-        <VuiBox display="flex" alignItems="center">
-          <AdobeXD size="20px" />
-          <VuiTypography pl="16px" color="white" variant="button" fontWeight="medium">
-            Chakra Bootstrap Paradox Version
-          </VuiTypography>
-        </VuiBox>
-      ),
-      budget: (
-        <VuiTypography variant="button" color="white" fontWeight="medium">
-          $14,000
-        </VuiTypography>
-      ),
-      status: (
-        <VuiTypography variant="button" color="white" fontWeight="medium">
-          Working
-        </VuiTypography>
-      ),
-      completion: <Completion value={60} color="info" />,
-      action,
-    },
-    {
-      project: (
-        <VuiBox display="flex" alignItems="center">
-          <Atlassian size="20px" />
-          <VuiTypography pl="16px" color="white" variant="button" fontWeight="medium">
-            Add Progress Track
-          </VuiTypography>
-        </VuiBox>
-      ),
-      budget: (
-        <VuiTypography variant="button" color="white" fontWeight="medium">
-          $3,000
-        </VuiTypography>
-      ),
-      status: (
-        <VuiTypography variant="button" color="white" fontWeight="medium">
-          Done
-        </VuiTypography>
-      ),
-      completion: <Completion value={100} color="info" />,
-      action,
-    },
-    {
-      project: (
-        <VuiBox display="flex" alignItems="center">
-          <Slack size="20px" />
-          <VuiTypography pl="16px" color="white" variant="button" fontWeight="medium">
-            Fix Platform Errors
-          </VuiTypography>
-        </VuiBox>
-      ),
-      budget: (
-        <VuiTypography variant="button" color="white" fontWeight="medium">
-          Not set
-        </VuiTypography>
-      ),
-      status: (
-        <VuiTypography variant="button" color="white" fontWeight="medium">
-          Canceled
-        </VuiTypography>
-      ),
-      completion: <Completion value={30} color="info" />,
-      action,
-    },
-    {
-      project: (
-        <VuiBox display="flex" alignItems="center">
-          <Spotify size="20px" />
-          <VuiTypography pl="16px" color="white" variant="button" fontWeight="medium">
-            Launch our Mobile App
-          </VuiTypography>
-        </VuiBox>
-      ),
-      budget: (
-        <VuiTypography variant="button" color="white" fontWeight="medium">
-          $32,000
-        </VuiTypography>
-      ),
-      status: (
-        <VuiTypography variant="button" color="white" fontWeight="medium">
-          Canceled
-        </VuiTypography>
-      ),
-      completion: <Completion value={0} color="info" />,
-      action,
-    },
-    {
-      project: (
-        <VuiBox display="flex" alignItems="center">
-          <Jira size="20px" />
-          <VuiTypography pl="16px" color="white" variant="button" fontWeight="medium">
-            Add the New Pricing Page
-          </VuiTypography>
-        </VuiBox>
-      ),
-      budget: (
-        <VuiTypography variant="button" color="white" fontWeight="medium">
-          $2,300
-        </VuiTypography>
-      ),
-      status: (
-        <VuiTypography variant="button" color="white" fontWeight="medium">
-          Done
-        </VuiTypography>
-      ),
-      completion: <Completion value={100} color="info" />,
-      action,
-    },
-  ],
+  rows: rows,
 };
