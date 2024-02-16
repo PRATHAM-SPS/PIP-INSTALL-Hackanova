@@ -11,6 +11,7 @@ import Expense from "layouts/expense";
 import OCR from "layouts/ocr/OCR";
 import Stocks from "layouts/stocks";
 import Plan from "layouts/plan";
+import Split from "layouts/split";
 
 // Bootstrap Paradox Dashboard React icons
 import { IoRocketSharp } from "react-icons/io5";
@@ -61,11 +62,20 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Budget Split",
+    name: "Budget",
     key: "budget-split",
     route: "/budget",
     icon: <IoIosDocument size="15px" color="inherit" />,
     component: Budget,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Bill Split",
+    key: "bill-split",
+    route: "/billsplit",
+    icon: <IoIosDocument size="15px" color="inherit" />,
+    component: Split,
     noCollapse: true,
   },
   {

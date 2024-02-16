@@ -134,6 +134,51 @@ def get_product_info():
     return {"key" : '1'}
 
 
+@app.route("/splitbillemail", methods = ['POST'])
+def splitbillemail(receiver_email='barwaniwalataher6@gmail.com'):
+    email = request.json['email']
+    amt = request.json["amt"]
+    l = email.count(',')
+    finalamt = amt/(l+1)
+
+    geminikey="AIzaSyDeIMfblCzN3zfBl9CBt8n12HvjQYhRANQ"
+    genai.configure(api_key = geminikey)
+# Email account credentials
+    pf=f'''Create an email body to split the bill of amount: {amt} into {l+1} people and allot each person {finalamt}'''
+    model = genai.GenerativeModel('gemini-pro')
+    
+    alternative = model.generate_content(pf)
+    body = alternative.text
+    print(body)
+    sender_email = 'barwaniwalataher6@outlook.com'
+    sender_password = '_Taher@2002'
+    receiver_email = 'tripathirishi80@gmail.com'
+
+    # Create message object instance
+    message = MIMEMultipart()
+    message['From'] = sender_email
+    message['To'] = receiver_email
+    message['Subject'] = 'Terra Wallet Update!'
+
+    # Email body
+    body = body
+    message.attach(MIMEText(body, 'plain'))
+
+    # Create SMTP session
+    session = smtplib.SMTP('smtp.office365.com', 587)
+    session.starttls()
+    session.login(sender_email, sender_password)
+
+    # Send email
+    text = message.as_string()
+    session.sendmail(sender_email, receiver_email, text)
+    session.quit()
+    print('Mail Sent')
+
+    return json.dumps({"success":"200"})
+
+
+
 @app.route("/send_point_mail",methods = ["POST"])
 def send_point_mail(receiver_email='barwaniwalataher6@gmail.com'):
     product = request.json["product"]
