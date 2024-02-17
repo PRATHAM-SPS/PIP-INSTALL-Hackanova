@@ -54,25 +54,13 @@ import InvoiceModal from "./components/Agreement/Agreement";
 
 function Dashboard() {
 
-  try {
-    const querySnapshot = getDocs(collection(fs, "kshitij", "February Expense", "transactions"));
-    const data = [];
-    querySnapshot.forEach((doc) => {
-      data.push(doc);
-    });
-    console.log(data);
-    let response = axios.post("http://localhost:4000/llm", data);
-    console.log(response.data);
-  } catch (error) {
-    console.log("Error getting documents: ", error);
-  }
-
   const { gradients } = colors;
   const { cardContent } = gradients;
 
   const [income, setIncome] = useState(null);
   const [points, setPoints] = useState(null);
   const [expense, setExpense] = useState(null);
+  const [suggestion, setSuggestion] = useState(null);
 
   const monthNames = [
     "January",
@@ -109,6 +97,26 @@ function Dashboard() {
   // });
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let data = [];
+        await getDocs(
+          collection(fs, "kshitij", "February Expense", "transactions")
+        ).then((data1) => {
+          data1.forEach((doc) => {
+            data.push(doc);
+          });
+        });
+        console.log(data);
+        await axios.post("http://localhost:4000/llm", data).then((e) => {
+          setSuggestion(e.data);
+        });
+        console.log("dasda")
+      } catch (error) {
+        console.log("Error getting documents: ", error);
+      }
+    };
+    fetchData();
 
     getDocs(
       collection(fs, "kshitij", monthName + " Expense", "transactions")
@@ -213,6 +221,7 @@ function Dashboard() {
             info={info}
             expense={expense}
             income={income}
+            suggestion={suggestion}
           />
           <Grid container spacing="18px">
             <Grid item xs={12} lg={12} xl={5}>

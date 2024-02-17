@@ -28,12 +28,15 @@ genai.configure(api_key = geminikey)
 @app.route('/llm', methods=['POST'])
 def analyze_llm():
     data = request.json
-    pf = f'''Analyze the following transactional data and give insights about the users spending pattern: {data}'''
+    pf = f'''Analyze the following transactional data and give insights about the users spending pattern: {data}
+                Suggest where user can save his money.
+                Give the analysis of the spendings in two paragraphs
+            '''
     model = genai.GenerativeModel('gemini-1.0-pro')
     response = model.generate_content(pf)
     print(response.text)
-    
-    return jsonify(data)
+    print(type(response.text))
+    return response.text
 
 @app.route('/send_mail', methods=['POST'])
 def send_mail(name = "Rishabh"):

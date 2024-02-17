@@ -119,29 +119,35 @@ const PieChart = (value) => {
       }
     };
   }, []);
-  
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-  <canvas id="myPieChart" width="400" height="400"></canvas>
-  {data && (
-    <div>
-      {data.labels.map((label, index) => (
-        <div key={index} style={{ display: "flex", alignItems: "center", marginLeft: '30px' }}>
-          <div
-            style={{
-              width: "20px",
-              height: "20px",
-              backgroundColor: data.datasets[0].backgroundColor[index],
-              marginRight: "10px",
-            }}
-          ></div>
-          <div>{label}</div>
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <canvas id="myPieChart" width="400" height="400"></canvas>
+      {data && (
+        <div>
+          {data.labels.map((label, index) => (
+            <div
+              key={index}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginLeft: "30px",
+              }}
+            >
+              <div
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  backgroundColor: data.datasets[0].backgroundColor[index],
+                  marginRight: "10px",
+                }}
+              ></div>
+              <div>{label}</div>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
-  )}
-</div>
   );
 };
 
@@ -234,7 +240,7 @@ class InvoiceModal extends React.Component {
     if (chartRef.current) {
       chartRef.current.destroy();
     }
-  }
+  };
 
   render() {
     return (
@@ -264,13 +270,18 @@ class InvoiceModal extends React.Component {
               </div>
             </div>
             <div className="p-4">
-              <h4 className="fw-bold my-2">Income:  &nbsp; &#8377;{this.props.income}</h4>
-              <h4 className="fw-bold my-2">Expenses: &nbsp; &#8377;{this.props.expense}</h4>
+              <h4 className="fw-bold my-2">
+                Income: &nbsp; &#8377;{this.props.income}
+              </h4>
+              <h4 className="fw-bold my-2">
+                Expenses: &nbsp; &#8377;{this.props.expense}
+              </h4>
               <h4 className="fw-bold my-2">
                 Balance: &nbsp; &#8377;{this.props.income - this.props.expense}
               </h4>
+              <hr></hr>
               <div
-                style={{ width: "300px", height: "300px", marginTop: "80px" }}
+                style={{ width: "300px", height: "300px", marginTop: "40px" }}
               >
                 <div>
                   {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -318,6 +329,11 @@ class InvoiceModal extends React.Component {
                   </tbody>
                 </Table>
               )}
+            </div>
+            <div className="p-2 ml-4">
+              {this.props.suggestion ? this.props.suggestion.split("\n").map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              )): ''}
             </div>
             <div className="p-4 text-end">
               Signed By
