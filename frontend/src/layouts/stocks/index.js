@@ -18,6 +18,9 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 
 import { makeStyles } from "@mui/styles";
+import { fs } from "layouts/authentication/firebase";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+
 
 const useStyles = makeStyles((theme) => ({
   chatContainer: {
@@ -102,8 +105,39 @@ const ChatPage = () => {
         const response = await axios.post('http://localhost:4000/get_bot_response', {
           userMessage: inputMessage,
         });
-
         const botResponse = response.data.botResponse;
+        console.log(botResponse);
+        const [number, medicine, medicalAssign] = botResponse.split(',').map(item => item.trim());
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let monthIndex = (new Date().getMonth());
+        let monthName = monthNames[monthIndex];
+
+        const currentDate = new Date();
+
+        // Get the components of the date
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        
+        // Get the components of the time
+        const hours = String(currentDate.getHours()).padStart(2, '0');
+        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+        
+        // Create the simple date and time format
+        const simpleDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+        const transactionCollectionRef = setDoc(doc(fs, "kshitij", monthName + " Expense", "transactions/t" + simpleDateTime  ), {
+          amount :  number,
+          datetime: simpleDateTime,
+          option: medicalAssign,
+          product:  medicine
+
+      });
+        console.log("transaction saved")
+
+       
+        //
         setChatMessages((prevMessages) => [
           ...prevMessages,
           { type: 'bot', text: botResponse },

@@ -175,17 +175,23 @@ def get_bot_response():
     user_message = request.json.get('userMessage', '')
     global chat_sum 
     print(chat_sum)
-    
-    # Perform any backend logic based on the user's message here
-    # For example, you can call your Gem AI API or any other processing
+
     
     # Use Gem AI to generate a response
-    pf = f'''You are a finance chatbot and your task is to give appropriate outputs to the user's inputs. Make your answers short and to the point
-            Chat Summary: {chat_sum}
-            User{user_message}'''
-    model = genai.GenerativeModel('gemini-pro')
+    pf = f'''You are a finance chatbot and you are supposed to extract, the amount in number that the user has spent, along with the category and the product of the expense. Reply with comma seperated string
+            Select the category: Bills, Education, Food ,Investment, Medical, Misc
+            Always give money first and product followed by category at the end
+
+            example:  I spent $100 on ice cream today
+            output: 100, ice cream, Food
+
+            Sentence = {user_message}
+            Chat Summary: {chat_sum}'''
+    model = genai.GenerativeModel('gemini-1.0-pro')
     response = model.generate_content(pf)
     generated_text = response.text
+
+    items = generated_text.split(',')
 
     chat_sum +=  " User message: "+ user_message + " Bot Answer: " + response.text
     
