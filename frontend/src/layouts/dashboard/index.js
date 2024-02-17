@@ -53,6 +53,20 @@ import { onValue, ref } from "firebase/database";
 import InvoiceModal from "./components/Agreement/Agreement";
 
 function Dashboard() {
+
+  try {
+    const querySnapshot = getDocs(collection(fs, "kshitij", "February Expense", "transactions"));
+    const data = [];
+    querySnapshot.forEach((doc) => {
+      data.push(doc);
+    });
+    console.log(data);
+    let response = axios.post("http://localhost:4000/llm", data);
+    console.log(response.data);
+  } catch (error) {
+    console.log("Error getting documents: ", error);
+  }
+
   const { gradients } = colors;
   const { cardContent } = gradients;
 
@@ -90,27 +104,23 @@ function Dashboard() {
     });
   };
 
-        // querySnapshot.forEach((doc) => {
-        //     console.log(doc.id, " => ", doc.data());
-        // });
+  // querySnapshot.forEach((doc) => {
+  //     console.log(doc.id, " => ", doc.data());
+  // });
 
   useEffect(() => {
-    getDoc(rewards)
-      .then((data) => {
-        setPoints(data.data().rewards);
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
 
-    getDocs(collection(fs, "kshitij", monthName + " Expense", "transactions")).then((data) => {
+    getDocs(
+      collection(fs, "kshitij", monthName + " Expense", "transactions")
+    ).then((data) => {
       setInfo(data);
-    })
+    });
 
     getDoc(balanceref)
       .then((data) => {
         setIncome(data.data().income);
         setExpense(data.data().expense);
+        setPoints(data.data().rewards);
       })
       .catch((error) => {
         console.log("Error getting documents: ", error);
@@ -119,8 +129,8 @@ function Dashboard() {
   const [projects, setProjects] = useState([]);
 
   useEffect(async () => {
-  //  const querySnapshot = await getDocs(collection(fs, "kshitij", monthName + " Expense", "transactions"));
-  //  setInfo(querySnapshot);
+    //  const querySnapshot = await getDocs(collection(fs, "kshitij", monthName + " Expense", "transactions"));
+    //  setInfo(querySnapshot);
     const query = ref(db, "1");
     return onValue(query, (snapshot) => {
       const data = snapshot.val();
@@ -129,7 +139,6 @@ function Dashboard() {
         setProjects(data);
       }
     });
-
   }, []);
 
   const print123 = () => {
@@ -198,7 +207,13 @@ function Dashboard() {
           </Grid>
         </VuiBox>
         <VuiBox mb={3}>
-          <InvoiceModal showModal={isOpen} closeModal={closeModal} info={info} expense={expense} income={income} />
+          <InvoiceModal
+            showModal={isOpen}
+            closeModal={closeModal}
+            info={info}
+            expense={expense}
+            income={income}
+          />
           <Grid container spacing="18px">
             <Grid item xs={12} lg={12} xl={5}>
               <WelcomeMark />

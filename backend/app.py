@@ -25,6 +25,16 @@ chat_sum = " "
 geminikey="AIzaSyD17qzyJMl5wjkj79jvpiUSfjA_dv9-dPw"
 genai.configure(api_key = geminikey)
 
+@app.route('/llm', methods=['POST'])
+def analyze_llm():
+    data = request.json
+    pf = f'''Analyze the following transactional data and give insights about the users spending pattern: {data}'''
+    model = genai.GenerativeModel('gemini-1.0-pro')
+    response = model.generate_content(pf)
+    print(response.text)
+    
+    return jsonify(data)
+
 @app.route('/send_mail', methods=['POST'])
 def send_mail(name = "Rishabh"):
     category = request.json["category"]
@@ -77,7 +87,7 @@ def space_file():
         return {'error': result['ErrorMessage']}
     else:
         pf = f"{result['ParsedResults'][0]['ParsedText']} You are a financial advisor analyse this find the cost, product and classify it into one of this category [bills, grocery, education, misc, investment, medical]. Give the output as cost, product, category Give me comma separated values. give strictly in this format. Don't give me in key-value pair"
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-1.0-pro')
         instructions = model.generate_content(pf)
         print(instructions.text)
         return instructions.text.split(',')

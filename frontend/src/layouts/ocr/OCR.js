@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
+import React from "react";
 
+import MicIcon from "@mui/icons-material/Mic";
 // PIP INSTALL Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
@@ -34,8 +36,9 @@ const options = [
   { label: "Misc", value: "extra" },
 ];
 import NavbarDarkExample from "components/NavbarDarkExample";
+import OCR from "layouts/ocr/OCR";
 
-function OCR() {
+function Expense() {
   // OCR
   const [image, setImage] = useState(null);
   const [matches, setMatches] = useState([]);
@@ -46,14 +49,15 @@ function OCR() {
   const [category, setCategory] = useState(null);
   const [product, setProduct] = useState(null);
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     setImage(event.target.files[0]);
+    await handleOCR(event.target.files[0]);
   };
 
-  const handleOCR = async () => {
+  const handleOCR = async (img) => {
     try {
       const formData = new FormData();
-      formData.append("image", image);
+      formData.append("image", img);
       const response = await axios.post("http://localhost:4000/ocr", formData);
       console.log(response.data);
       setAmount(response.data[0]);
@@ -192,6 +196,7 @@ function OCR() {
     axios
       .post("http://localhost:4000/product", { product_name: product })
       .then((data) => {
+        console.log("asda")
         console.log(data.data.key);
         if (data.data.key === "1") {
           try {
@@ -204,7 +209,7 @@ function OCR() {
               }
             );
             console.log("renewable");
-            setMessage("Bravo! you won two Terra Rewards");
+            setMessage("Bravo! you won two Buddy Rewards");
             axios
               .post("http://localhost:4000/send_point_mail", {
                 product: product,
@@ -225,7 +230,7 @@ function OCR() {
             );
             console.log("non-renewable");
             setMessage(
-              "You lost 1 Terra Reward, try to use renewable resource next time"
+              "You lost 1 Buddy Reward, try to use renewable resource next time"
             );
             axios
               .post("http://localhost:4000/send_point_mail", {
@@ -268,6 +273,22 @@ function OCR() {
         image={bgSignIn}
       >
         <VuiBox component="form" role="form">
+          <div>
+            <input
+              type="file"
+              onChange={handleImageChange}
+              id="uploadInput"
+              style={{
+                cursor: "pointer",
+                padding: "10px 15px",
+                backgroundColor: "#2196F3",
+                color: "#fff",
+                borderRadius: "5px",
+                marginRight: "5px",
+                width: "100%"
+              }}
+            />
+          </div>
           <VuiBox mb={2}>
             <VuiBox mb={1} ml={0.5}>
               <VuiTypography
@@ -308,15 +329,8 @@ function OCR() {
             mb="14px"
             sx={({ typography: { size } }) => ({ fontSize: size.lg })}
           >
-            or
+            {/* or */}
           </VuiTypography>
-          <div>
-            <input type="file" onChange={handleImageChange} />
-            <button onClick={handleOCR}>OCR</button>
-            {/* {matches.map((match, index) => (
-        <div key={index}>{match}</div>
-      ))} */}
-          </div>
           <VuiBox mb={2}>
             <VuiBox mb={1} ml={0.5}>
               <VuiTypography
@@ -363,7 +377,7 @@ function OCR() {
           </VuiBox>
 
           {message ==
-          "You lost 1 Terra Reward, try to use renewable resource next time" ? (
+          "You lost 1 Buddy Reward, try to use renewable resource next time" ? (
             <VuiBox mb={1} ml={0.5}>
               <VuiTypography
                 component="label"
@@ -391,4 +405,5 @@ function OCR() {
     </>
   );
 }
-export default OCR;
+export default Expense;
+

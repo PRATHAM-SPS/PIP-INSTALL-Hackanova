@@ -19,7 +19,7 @@ Chart.register(PieController, CategoryScale, ArcElement);
 
 const PieChart = (value) => {
   const [data, setData] = useState(null);
-const chartRef = useRef(null);
+  const chartRef = useRef(null);
   useEffect(async () => {
     let datainfo = {};
     await getDocs(collection(fs, "kshitij", "February Expense", "transactions"))
@@ -32,7 +32,7 @@ const chartRef = useRef(null);
         // Group by key and sum amounts
         console.log(data);
         const groupedData = data.reduce((acc, curr) => {
-          const key = curr.data().option; // Replace 'option' with your actual key
+          const key = curr.data().option.toLowerCase(); // Replace 'option' with your actual key
           const amount = parseInt(curr.data().amount); // Replace 'amount' with your actual amount field
 
           if (!acc[key]) {
@@ -60,7 +60,7 @@ const chartRef = useRef(null);
       bills: datainfo.bills,
       investment: datainfo.investment,
       medical: datainfo.medical,
-      misc: datainfo.misc,
+      misc: datainfo.extra,
     };
 
     // Calculate percentages for each expense category
@@ -264,10 +264,10 @@ class InvoiceModal extends React.Component {
               </div>
             </div>
             <div className="p-4">
-              <h4 className="fw-bold my-2">Income:   {this.props.income}</h4>
-              <h4 className="fw-bold my-2">Expenses:    {this.props.expense}</h4>
+              <h4 className="fw-bold my-2">Income:  &nbsp; &#8377;{this.props.income}</h4>
+              <h4 className="fw-bold my-2">Expenses: &nbsp; &#8377;{this.props.expense}</h4>
               <h4 className="fw-bold my-2">
-                Balance: {this.props.income - this.props.expense}
+                Balance: &nbsp; &#8377;{this.props.income - this.props.expense}
               </h4>
               <div
                 style={{ width: "300px", height: "300px", marginTop: "80px" }}

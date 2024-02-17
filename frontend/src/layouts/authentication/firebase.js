@@ -10,14 +10,13 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBFVUFb4OxHB5xqgs_Gj9Bks45UN_kkt1s",
-    authDomain: "Buddy-finance-8927d.firebaseapp.com",
-    databaseURL: "https://Buddy-finance-8927d-default-rtdb.firebaseio.com",
-    projectId: "Buddy-finance-8927d",
-    storageBucket: "Buddy-finance-8927d.appspot.com",
-    messagingSenderId: "999929828829",
-    appId: "1:999929828829:web:3c2dcbb15574ab908d9234",
-    measurementId: "G-GSS4D7EXHF"
+    apiKey: "AIzaSyCR5K_pJsMCNFAAyLhXiBlUdhpJjKMhvgQ",
+    authDomain: "hackanova-60da1.firebaseapp.com",
+    projectId: "hackanova-60da1",
+    storageBucket: "hackanova-60da1.appspot.com",
+    messagingSenderId: "891632605998",
+    appId: "1:891632605998:web:60b012bcc8cbbade2878bf",
+    measurementId: "G-47QR4PXYYL"
 };
 
 // Initialize Firebase
